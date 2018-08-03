@@ -1,4 +1,3 @@
-
 /**
  * SystemComponents can extend System,
  * can access whole System, System's entities, etc...

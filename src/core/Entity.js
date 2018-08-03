@@ -11,7 +11,7 @@ export default class Entity {
     }
 
     addComponent(component) {
-       // this.components[component.name] = component
+        // this.components[component.name] = component
         this.components.push(component)
 
         component.setEntity(this)
@@ -27,13 +27,21 @@ export default class Entity {
     }
 
     hasComponent(name) {
-        
-        return this.components.filter(c => { return c.name == name }).length > 0
+
+        return this.components.filter(c => {
+            return c.name == name
+        }).length > 0
 
     }
 
     getComponent(name) {
-        return this.components.filter(c => {return c.name == name;})[0]
+        return this.components.filter(c => {
+            return c.name == name;
+        })[0]
+    }
+
+    setSystem(sys) {
+        this.system = sys
     }
 
     getSystem() {

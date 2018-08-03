@@ -10,9 +10,8 @@ export class System {
     }
 
     addSystemComponent(component) {
+        component.system = this
         this.system_components.push(component)
-        component.system = this 
-
         component.create(this)
     }
 
@@ -21,13 +20,14 @@ export class System {
      * @param {Entity} entity 
      */
     addEntity(entity) {
-        entity.system  = this
+        entity.system = this
         this.entities.push(entity)
+        console.log('[System]: adding entity: #' + this.entities.length)
     }
 
     removeEntity(entity) {
         this.entities.forEach(e => {
-            if(e === entity) {
+            if (e === entity) {
                 // TODO: remove
             }
         })
@@ -64,7 +64,7 @@ export class System {
         let entities = [];
 
         this.entities.forEach(e => {
-            if(e.hasComponent(component)) entities.push(e);
+            if (e.hasComponent(component)) entities.push(e);
         })
 
         return entities;
@@ -92,4 +92,4 @@ export class System {
         this.updateEntitiesAndComponents(dt)
     }
 
- }
+}

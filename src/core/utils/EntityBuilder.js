@@ -9,7 +9,7 @@ import Entity from "../Entity";
 export default class EntityBuilder {
 
     constructor(system) {
-        this.entity = new Entity() 
+        this.entity = new Entity()
         this.entity.system = system
     }
 
@@ -18,21 +18,21 @@ export default class EntityBuilder {
     }
 
     setName(name) {
-        this.entity.name = name 
+        this.entity.name = name
 
-        return this 
+        return this
     }
 
     setTag(tag) {
-        this.entity.tag = tag 
+        this.entity.tag = tag
 
-        return this 
+        return this
     }
 
     addComponent(c) {
         this.entity.addComponent(c)
 
-        return this 
+        return this
     }
 
     get() {

@@ -15,29 +15,36 @@ export default class SpriteComponent extends Component {
     create() {
         this.sprite = PIXI.Sprite.fromImage(this.image)
 
+        this.sprite.anchor.set(0.5, 0.5)
+
+        if(this.getSystem().getSystemComponent("rendering") == null) {
+            console.error("System is missing 'rendering' component!")
+            return;
+        }
+
         this.getSystem().getSystemComponent("rendering").getLayer(0).addChild(this.sprite);
 
-        if(this.getEntity().hasComponent("transform")) {
+        if (this.getEntity().hasComponent("transform")) {
             let transformComponent = this.getEntity().getComponent("transform");
 
-            this.sprite.position.x = transformComponent.position.x; 
+            this.sprite.position.x = transformComponent.position.x;
             this.sprite.position.y = transformComponent.position.y;
+            this.sprite.rotation = transformComponent.rotation
         }
     }
 
     update(dt) {
         super.update(dt)
 
-        
 
-        if(this.sprite != null) {
-            if(this.getEntity().hasComponent("transform")) {
+
+        if (this.sprite != null) {
+            if (this.getEntity().hasComponent("transform")) {
                 let transformComponent = this.getEntity().getComponent("transform");
 
-                this.sprite.position.x = transformComponent.position.x; 
+                this.sprite.position.x = transformComponent.position.x;
                 this.sprite.position.y = transformComponent.position.y;
-                console.log('ustawiam pozycje!')
-               // this.sprite.rotation = transformComponent.rotation;
+                this.sprite.rotation = transformComponent.rotation;
             }
         }
     }

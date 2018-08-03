@@ -11,23 +11,22 @@ export default class RenderingSystemComponent extends SystemComponent {
         this.layers = []
 
         this.app = new PIXI.Application({
-            width: 640,         
-            height: 480,        
-            antialias: true,    
+            width: 1024,
+            height: 720,
+            antialias: true,
             transparent: false,
-            resolution: 1    
+            resolution: 1
         })
 
         this.app.renderer.backgroundColor = 0xF5F5F5
 
-        for(let i = 0; i < 10; i++) {
+        for (let i = 0; i < 10; i++) {
             let layer = new PIXI.Container()
             this.app.stage.addChild(layer)
             this.layers[i] = layer
         }
 
         document.body.appendChild(this.app.view)
-
     }
 
     getLayer(index) {

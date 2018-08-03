@@ -12,4 +12,8 @@ export default class TransformComponent extends Component {
         this.rotation = 0.0
     }
 
+    update(dt) {
+        super.update(dt)
+    }
+
 }
