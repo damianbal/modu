@@ -21,7 +21,7 @@ export default class GameSystem extends System {
         for(let i = 0; i < 3; i++) {
             for(let j = 0; j < 3; j++) {
                 // add entity
-                let entity = EntityFactory.createSpriteEntity(this, 125 + (i * 64.0), 100.0 + (j * 64.0))
+                let entity = EntityFactory.createSpriteEntity(this, 125 + (i * 64.0), 100.0 + (j * 64.0) + i*10.0)
 
                 this.addEntity(entity)
             }
@@ -29,7 +29,8 @@ export default class GameSystem extends System {
 
 
         for(let i = 0; i < 3; i++) {
-            let ground = EntityFactory.createSpriteEntity(this, 100.0 + (64.0 * i), 600.0 + (i * 10.0), true)
+            //let ground = EntityFactory.createSpriteEntity(this, 100.0 + (64.0 * i), 600.0 + (i * 10.0), true)
+            let ground = EntityFactory.createBox(this, 100.0 + (148.0 * i), 600.0 + (i * 15.0), true)
 
             this.addEntity(ground)
         }

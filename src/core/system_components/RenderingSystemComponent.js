@@ -26,7 +26,7 @@ export default class RenderingSystemComponent extends SystemComponent {
             this.layers[i] = layer
         }
 
-        document.body.appendChild(this.app.view)
+        document.getElementById('modu').appendChild(this.app.view)
     }
 
     getLayer(index) {

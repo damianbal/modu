@@ -18,6 +18,15 @@ export default class PhysicsSystemComponent extends SystemComponent {
         Matter.Engine.run(this.engine)
     }
 
+    setGravity(x, y) {
+        this.world.gravity.x = x 
+        this.world.gravity.y = y
+    }
+
+    setTimescale(timescale = 1.0) {
+        this.engine.timing.timeScale = timescale
+    }
+
     addBody(body) {
         Matter.World.add(this.world, body)
     }

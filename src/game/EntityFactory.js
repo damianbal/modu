@@ -20,11 +20,22 @@ export default class EntityFactory {
                 x,
                 y
             }))
-            .addComponent(new SpriteComponent("assets/box.png"))
-            .addComponent(new PhysicsComponent('rect', {
-                x: x, y: y, is_static: is_static, w: 64.0, h: 64.0
-            }))
+            .addComponent(new SpriteComponent("assets/ball.png"))
+            //.addComponent(PhysicsComponent.rect(64, 64, is_static))
+            .addComponent(PhysicsComponent.circle(64.0-29.0, is_static))
             .get()
+    }
+
+    static createBox(system, x = 10.0, y = 10.0, is_static) {
+        return EntityBuilder.builder(system)
+        .addComponent(new TransformComponent({
+            x,
+            y
+        }))
+        .addComponent(new SpriteComponent("assets/box2.png"))
+        //.addComponent(PhysicsComponent.rect(64, 64, is_static))
+        .addComponent(PhysicsComponent.rect(140,140,is_static))
+        .get()
     }
 
 }

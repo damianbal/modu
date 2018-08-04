@@ -49,4 +49,12 @@ export default class SpriteComponent extends Component {
         }
     }
 
+    getWidth() {
+        return this.sprite.width
+    }
+
+    getHeight() {
+        return this.sprite.height
+    }
+
 }

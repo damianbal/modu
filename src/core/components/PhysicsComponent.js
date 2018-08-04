@@ -4,7 +4,7 @@ import Matter from "matter-js";
 
 export default class PhysicsComponent extends Component {
 
-    constructor(type, params = { is_static: false, x: 0.0, y: 0.0, w: 32.0, h: 32.0 }) {
+    constructor(type, params = { isStatic: false, x: 0.0, y: 0.0, w: 32.0, h: 32.0 }) {
         super();
 
         this.name = "physics"
@@ -14,18 +14,39 @@ export default class PhysicsComponent extends Component {
         this.type = type
     }
 
-    static sprite() {
-        let physicsComponent = new PhysicsComponent();
+    static rect(width = 64, height = 64, isStatic = false) {
+        let pc = new PhysicsComponent('rect', { isStatic, w: width, h: height })
+        return pc
+    }
+
+    static sprite(isStatic = false) {
+        let pc = new PhysicsComponent('sprite', { isStatic, width: 0, height: 0 })
+        return pc
+    }
+    
+    static circle(radius = 32, isStatic = false) {
+        let pc = new PhysicsComponent('circle', { w: radius, isStatic })
+        return pc
     }
 
     create() {
+        let transform = this.getEntity().getComponent("transform");
+       
+
         if(this.type == 'rect') {
-            this.body = Matter.Bodies.rectangle(this.params.x, this.params.y, this.params.w, this.params.h, {
-                isStatic: this.params.is_static
+            this.body = Matter.Bodies.rectangle(transform.position.x, transform.position.y, this.params.w, this.params.h, {
+                isStatic: this.params.isStatic
             })
         }
-        else if(this.type == 'sprite') {
-            // create body out of sprites size
+        else if(this.type == 'sprite') { // TODO: sprite as circle as well?
+            let sprite  = this.getEntity().getComponent("sprite");
+
+            this.body  = Matter.Bodies.rectangle(transform.position.x, transform.position.y, sprite.getWidth(), sprite.getHeight(), { isStatic: this.params.isStatic });
+
+            console.log('PhysicsSprite: ',this.body)
+        }
+        else if(this.type == 'circle') {
+            this.body = Matter.Bodies.circle(transform.position.x, transform.position.y, this.params.w, { isStatic: this.params.isStatic })
         }
     
         if(this.body == null) {
@@ -54,6 +75,16 @@ export default class PhysicsComponent extends Component {
 
         
 
+    }
+
+    setMass(mass) {
+        Matter.Body.setMass(this.body, mass)
+
+
+    }
+
+    setVelocity(x, y) {
+        Matter.Body.setVelocity(this.body, Matter.Vector.create(x,y))
     }
 
 }
