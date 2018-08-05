@@ -2,6 +2,7 @@ import { System } from "../../core/System";
 import RenderingSystemComponent from "../../core/system_components/RenderingSystemComponent";
 import EntityFactory from "../EntityFactory";
 import PhysicsSystemComponent from "../../core/system_components/PhysicsSystemComponent";
+import { Keys } from "../../core/Input";
 
 export default class GameSystem extends System {
 
@@ -47,8 +48,38 @@ export default class GameSystem extends System {
 
         box2.getComponent("physics").setFriction(0.5);
 
+        this.player = EntityFactory.createBox(this, 150, 0, false);
+        this.addEntity(this.player)
+
         // add the loop
         rendering.app.ticker.add(this.update.bind(this))
+    }
+
+    onKeyUp(key) {
+        if(key == Keys.SPACE) {
+            let box2 = EntityFactory.createBox(this, 150.0, -200.0, false);
+            this.addEntity(box2);
+        }
+
+        if(key == Keys.UP) {
+            let entity = EntityFactory.createSpriteEntity(this, 100.0 + Math.floor(Math.random() * 100.0), 100.0 , false)
+
+            this.addEntity(entity)
+        }
+
+        if(key == Keys.LEFT) {
+                this.player.getComponent("physics").setAngularVelocity(0.2)
+        }
+
+        if(key == Keys.RIGHT) {
+            this.player.getComponent("physics").setPosition(150.0, 0);
+        }
+    }
+
+    onKeyDown(key) {
+        if(key == Keys.LEFT) {
+            
+        }
     }
 
     update(dt) {

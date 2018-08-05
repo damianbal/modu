@@ -7,6 +7,27 @@ export class System {
     constructor() {
         this.entities = []
         this.system_components = []
+
+        // keyboard
+        window.addEventListener("keydown", event => {
+            this.onKeyDown(event.keyCode)
+            event.preventDefault()
+        }, false)
+
+        window.addEventListener("keyup", event => {
+            this.onKeyUp(event.keyCode)
+            event.preventDefault()
+        })
+    }
+
+    onKeyDown(key) {
+        // handle key down
+        this.entities.forEach(entity => entity.onKeyDown(key))
+    }
+
+    onKeyUp(key) {
+        // handle key up
+        this.entities.forEach(entity => entity.onKeyUp(key))
     }
 
     addSystemComponent(component) {

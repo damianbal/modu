@@ -26,6 +26,14 @@ export default class Entity {
 
     }
 
+    onKeyUp(key) {
+        // key up
+    }
+
+    onKeyDown(key) {
+        // key down
+    }
+
     hasComponent(name) {
 
         return this.components.filter(c => {

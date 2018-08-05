@@ -37,10 +37,6 @@ export default class EntityFactory {
         //.addComponent(PhysicsComponent.rect(64, 64, is_static))
         .addComponent(pc);
 
-        pc.setAngle(30.0);
-        pc.setRestitution(0.7);
-        pc.setFriction(0.9);
-        pc.setVelocity(0.5, 0.0);
 
         return e.get();
         
