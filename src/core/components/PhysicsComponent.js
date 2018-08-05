@@ -79,12 +79,50 @@ export default class PhysicsComponent extends Component {
 
     setMass(mass) {
         Matter.Body.setMass(this.body, mass)
-
-
     }
 
     setVelocity(x, y) {
         Matter.Body.setVelocity(this.body, Matter.Vector.create(x,y))
+    }
+
+    applyForce(position, force) {
+        Matter.Body.applyForce(this.body, position, force)
+    }
+
+    setAngle(angle) {
+        Matter.Body.setAngle(this.body, angle)
+    }
+
+    setAngularVelocity(velocity) {
+        Matter.Body.setAngularVelocity(this.body, velocity)
+    }
+
+    setDensity(density) {
+        Matter.Body.setDensity(this.body, density)
+    }
+    
+    setInertia(inertia) {
+        Matter.Body.setInertia(this.body, inertia)
+    }
+
+    setPosition(x,y) {
+        Matter.Body.setPosition(this.body, Matter.Vector.create(x,y))
+    }
+
+    setRestitution(restitution) {
+        this.body.restitution = restitution;
+    }
+
+    setFriction(friction) {
+        this.body.friction = friction;
+    }
+
+    setTimescale(timescale) {
+        this.body.timeScale = timescale
+    }
+
+    setStatic(isStatic) {
+        Matter.Body.setStatic(isStatic)
     }
 
 }

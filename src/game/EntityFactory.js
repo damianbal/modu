@@ -27,15 +27,24 @@ export default class EntityFactory {
     }
 
     static createBox(system, x = 10.0, y = 10.0, is_static) {
-        return EntityBuilder.builder(system)
+        let pc = PhysicsComponent.rect(140,140,is_static);
+        let e = EntityBuilder.builder(system)
         .addComponent(new TransformComponent({
             x,
             y
         }))
         .addComponent(new SpriteComponent("assets/box2.png"))
         //.addComponent(PhysicsComponent.rect(64, 64, is_static))
-        .addComponent(PhysicsComponent.rect(140,140,is_static))
-        .get()
+        .addComponent(pc);
+
+        pc.setAngle(30.0);
+        pc.setRestitution(0.7);
+        pc.setFriction(0.9);
+        pc.setVelocity(0.5, 0.0);
+
+        return e.get();
+        
+
     }
 
 }

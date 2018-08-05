@@ -17,7 +17,8 @@ export default class GameSystem extends System {
         // create physics 
         let physics = new PhysicsSystemComponent();
         this.addSystemComponent(physics)
-        
+
+
         for(let i = 0; i < 3; i++) {
             for(let j = 0; j < 3; j++) {
                 // add entity
@@ -36,6 +37,15 @@ export default class GameSystem extends System {
         }
 
 
+        let box = EntityFactory.createBox(this, 100.0, -200.0, false);
+        this.addEntity(box);
+
+        box.getComponent("physics").setFriction(0.5);
+
+        let box2 = EntityFactory.createBox(this, 150.0, -200.0, false);
+        this.addEntity(box2);
+
+        box2.getComponent("physics").setFriction(0.5);
 
         // add the loop
         rendering.app.ticker.add(this.update.bind(this))
