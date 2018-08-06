@@ -4,6 +4,8 @@ import Matter from "matter-js";
 
 export default class PhysicsComponent extends Component {
 
+    static name() { return "physics" }
+
     constructor(type, params = { isStatic: false, x: 0.0, y: 0.0, w: 32.0, h: 32.0 }) {
         super();
 
@@ -32,6 +34,9 @@ export default class PhysicsComponent extends Component {
     create() {
         let transform = this.getEntity().getComponent("transform");
        
+        let s = this.getEntity().getComponent("sprite");
+
+        console.log('Sprite component (physics): ', s.getWidth())
 
         if(this.type == 'rect') {
             this.body = Matter.Bodies.rectangle(transform.position.x, transform.position.y, this.params.w, this.params.h, {
@@ -39,11 +44,9 @@ export default class PhysicsComponent extends Component {
             })
         }
         else if(this.type == 'sprite') { // TODO: sprite as circle as well?
-            let sprite  = this.getEntity().getComponent("sprite");
-
-            this.body  = Matter.Bodies.rectangle(transform.position.x, transform.position.y, sprite.getWidth(), sprite.getHeight(), { isStatic: this.params.isStatic });
-
-            console.log('PhysicsSprite: ',this.body)
+            this.body = Matter.Bodies.rectangle(transform.position.x, transform.position.y, s.getWidth(), s.getHeight(), {
+                isStatic: this.params.isStatic
+            })
         }
         else if(this.type == 'circle') {
             this.body = Matter.Bodies.circle(transform.position.x, transform.position.y, this.params.w, { isStatic: this.params.isStatic })
@@ -55,11 +58,15 @@ export default class PhysicsComponent extends Component {
         }
         
         this.getSystem().getSystemComponent("physics").addBody(this.body)
+
+        console.log("Created physics component", this.body)
     }
 
     update(dt) {
 
         super.update(dt);
+
+
 
         // TODO: set body position to transform :)
         if(this.body != null) {
@@ -83,6 +90,14 @@ export default class PhysicsComponent extends Component {
 
     setVelocity(x, y) {
         Matter.Body.setVelocity(this.body, Matter.Vector.create(x,y))
+    }
+
+    setVelocityX(x) {
+        Matter.Body.setVelocity(this.body, Matter.Vector.create(x, this.body.velocity.y))
+    }
+
+    setVelocityY(y) {
+        Matter.Body.setVelocity(this.body, Matter.Vector.create(this.body.velocity.x, y))
     }
 
     applyForce(position, force) {
@@ -114,7 +129,7 @@ export default class PhysicsComponent extends Component {
     }
 
     setFriction(friction) {
-        this.body.friction = friction;
+        this.body.friction = friction
     }
 
     setTimescale(timescale) {

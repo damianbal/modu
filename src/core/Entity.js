@@ -10,12 +10,14 @@ export default class Entity {
         this.name = "Entity";
     }
 
-    addComponent(component) {
+    addComponent(component, configureComponent = (component) => {}) {
         // this.components[component.name] = component
         this.components.push(component)
 
         component.setEntity(this)
         component.create()
+
+        configureComponent(component)
     }
 
     update(dt) {
@@ -54,6 +56,10 @@ export default class Entity {
 
     getSystem() {
         return this.system
+    }
+
+    destroy() {
+        this.components.forEach(c => c.destroy())
     }
 
 }

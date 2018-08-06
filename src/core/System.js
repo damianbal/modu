@@ -1,3 +1,5 @@
+import Loader from "./Loader";
+
 /**
  * System
  */
@@ -7,6 +9,8 @@ export class System {
     constructor() {
         this.entities = []
         this.system_components = []
+
+        this.loader = new Loader()
 
         // keyboard
         window.addEventListener("keydown", event => {
@@ -18,6 +22,19 @@ export class System {
             this.onKeyUp(event.keyCode)
             event.preventDefault()
         })
+    }
+
+    preload() {
+        // load assets with this.loader.add
+    }
+
+    create() {
+        this.preload();
+        this.loader.load(this.setup.bind(this))
+    }
+
+    setup() {
+        // add entities, etc...
     }
 
     onKeyDown(key) {

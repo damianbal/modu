@@ -9,7 +9,7 @@ export default class Component {
     }
 
     destroy() {
-        
+        // destroy component
     }
 
     hasEntity() {

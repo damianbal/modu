@@ -29,8 +29,12 @@ export default class EntityBuilder {
         return this
     }
 
-    addComponent(c) {
+    addComponent(c, configureComponent = (component) => {}) {
         this.entity.addComponent(c)
+
+        c.setEntity(this.entity)
+
+        configureComponent(c)
 
         return this
     }

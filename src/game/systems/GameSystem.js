@@ -3,6 +3,7 @@ import RenderingSystemComponent from "../../core/system_components/RenderingSyst
 import EntityFactory from "../EntityFactory";
 import PhysicsSystemComponent from "../../core/system_components/PhysicsSystemComponent";
 import { Keys } from "../../core/Input";
+import EntityBuilder from "../../core/utils/EntityBuilder";
 
 export default class GameSystem extends System {
 
@@ -10,49 +11,42 @@ export default class GameSystem extends System {
         super();
 
         // create rendering component
-        let rendering = new RenderingSystemComponent()
+        this.rendering = new RenderingSystemComponent()
 
         // add rendering component to system
-        this.addSystemComponent(rendering)
+        this.addSystemComponent(this.rendering)
 
         // create physics 
         let physics = new PhysicsSystemComponent();
         this.addSystemComponent(physics)
+    }
 
+    preload() {
+        this.loader.add("assets/ball.png")
+        this.loader.add("assets/box2.png")
+        this.loader.add("assets/bullet.png")
+        this.loader.add("assets/ground.png")
+        this.loader.add("assets/modu-logo.png")
+    }
 
-        for(let i = 0; i < 3; i++) {
-            for(let j = 0; j < 3; j++) {
-                // add entity
-                let entity = EntityFactory.createSpriteEntity(this, 125 + (i * 64.0), 100.0 + (j * 64.0) + i*10.0)
+    setup() {
+        alert('Setup!')
 
-                this.addEntity(entity)
-            }
-        }
+        let e = EntityFactory.createBox(this, 105.0, 50.0, false)
 
+        this.addEntity(e)
 
-        for(let i = 0; i < 3; i++) {
-            //let ground = EntityFactory.createSpriteEntity(this, 100.0 + (64.0 * i), 600.0 + (i * 10.0), true)
-            let ground = EntityFactory.createBox(this, 100.0 + (148.0 * i), 600.0 + (i * 15.0), true)
+        let e2 = EntityFactory.createBox(this, 50.0, 500.0, true)
 
-            this.addEntity(ground)
-        }
+        this.addEntity(e2)
 
+        this.addEntity(EntityFactory.createBall(this, 60.0, -50.0))
 
-        let box = EntityFactory.createBox(this, 100.0, -200.0, false);
-        this.addEntity(box);
+        this.addEntity(EntityFactory.ground(this))
 
-        box.getComponent("physics").setFriction(0.5);
+        this.addEntity(EntityFactory.sprite(this, "assets/modu-logo.png", 100, 0, false))
 
-        let box2 = EntityFactory.createBox(this, 150.0, -200.0, false);
-        this.addEntity(box2);
-
-        box2.getComponent("physics").setFriction(0.5);
-
-        this.player = EntityFactory.createBox(this, 150, 0, false);
-        this.addEntity(this.player)
-
-        // add the loop
-        rendering.app.ticker.add(this.update.bind(this))
+        this.rendering.app.ticker.add(this.update.bind(this))
     }
 
     onKeyUp(key) {
@@ -60,26 +54,10 @@ export default class GameSystem extends System {
             let box2 = EntityFactory.createBox(this, 150.0, -200.0, false);
             this.addEntity(box2);
         }
-
-        if(key == Keys.UP) {
-            let entity = EntityFactory.createSpriteEntity(this, 100.0 + Math.floor(Math.random() * 100.0), 100.0 , false)
-
-            this.addEntity(entity)
-        }
-
-        if(key == Keys.LEFT) {
-                this.player.getComponent("physics").setAngularVelocity(0.2)
-        }
-
-        if(key == Keys.RIGHT) {
-            this.player.getComponent("physics").setPosition(150.0, 0);
-        }
     }
 
     onKeyDown(key) {
-        if(key == Keys.LEFT) {
-            
-        }
+
     }
 
     update(dt) {

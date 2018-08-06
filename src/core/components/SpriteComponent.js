@@ -4,6 +4,8 @@ import * as PIXI from 'pixi.js'
 
 export default class SpriteComponent extends Component {
 
+    static name() { return "sprite" }
+
     constructor(image) {
         super()
 
@@ -13,7 +15,9 @@ export default class SpriteComponent extends Component {
     }
 
     create() {
-        this.sprite = PIXI.Sprite.fromImage(this.image)
+        this.sprite = new PIXI.Sprite(
+            PIXI.loader.resources[this.image].texture
+        )
 
         this.sprite.anchor.set(0.5, 0.5)
 
@@ -31,6 +35,8 @@ export default class SpriteComponent extends Component {
             this.sprite.position.y = transformComponent.position.y;
             this.sprite.rotation = transformComponent.rotation
         }
+
+        console.log('Created sprite component', this.sprite.width)
     }
 
     update(dt) {

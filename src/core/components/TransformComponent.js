@@ -2,6 +2,8 @@ import Component from "../Component";
 
 export default class TransformComponent extends Component {
 
+    static name() { return "transform" }
+
     constructor(position = {x:10.0, y:10.0}) {
         super();
 
