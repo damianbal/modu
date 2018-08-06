@@ -26,7 +26,7 @@ export default class SpriteComponent extends Component {
             return;
         }
 
-        this.getSystem().getSystemComponent("rendering").getLayer(0).addChild(this.sprite);
+        this.getSystem().getSystemComponent("rendering").getLayer(this.getEntity().layer).addChild(this.sprite);
 
         if (this.getEntity().hasComponent("transform")) {
             let transformComponent = this.getEntity().getComponent("transform");

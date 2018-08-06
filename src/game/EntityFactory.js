@@ -15,11 +15,12 @@ export default class EntityFactory {
         .addComponent(new TransformComponent({
             x, y
         }))
-        .addComponent(new SpriteComponent("assets/ball.png"))
+        .addComponent(new SpriteComponent("assets/spaceship.png"))
         .addComponent(PhysicsComponent.sprite(false), (component) => {
             // blah ;)
-            component.setVelocity(5.0, -5.0)
-        });
+           // component.setVelocity(5.0, -1.0)
+        })
+        .addComponent(new ControllerComponent())
 
         return e.get();
 

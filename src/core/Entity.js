@@ -8,10 +8,23 @@ export default class Entity {
         this.components = [];
         this.tag = "Entity";
         this.name = "Entity";
+        this.layer = 0
+    }
+
+    create() {
+        // TODO: create all components 
+
+        this.setup();
+    }
+
+    /**
+     * Setup your entity here, including its components
+     */
+    setup() {
+
     }
 
     addComponent(component, configureComponent = (component) => {}) {
-        // this.components[component.name] = component
         this.components.push(component)
 
         component.setEntity(this)
@@ -52,6 +65,8 @@ export default class Entity {
 
     setSystem(sys) {
         this.system = sys
+
+        // this.create(); // create here because some components might need system
     }
 
     getSystem() {

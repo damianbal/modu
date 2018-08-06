@@ -19,10 +19,12 @@ export default class GameSystem extends System {
         // create physics 
         let physics = new PhysicsSystemComponent();
         this.addSystemComponent(physics)
+        
+        physics.setGravity(0,0)
     }
 
     preload() {
-        this.loader.add("assets/ball.png")
+        this.loader.add("assets/spaceship.png")
         this.loader.add("assets/box2.png")
         this.loader.add("assets/bullet.png")
         this.loader.add("assets/ground.png")
@@ -30,8 +32,6 @@ export default class GameSystem extends System {
     }
 
     setup() {
-        alert('Setup!')
-
         let e = EntityFactory.createBox(this, 105.0, 50.0, false)
 
         this.addEntity(e)
@@ -40,7 +40,8 @@ export default class GameSystem extends System {
 
         this.addEntity(e2)
 
-        this.addEntity(EntityFactory.createBall(this, 60.0, -50.0))
+        this.ball = EntityFactory.createBall(this, 300.0, 300.0)
+        this.addEntity(this.ball)
 
         this.addEntity(EntityFactory.ground(this))
 
@@ -50,18 +51,73 @@ export default class GameSystem extends System {
     }
 
     onKeyUp(key) {
-        if(key == Keys.SPACE) {
+        if(key == Keys.CTRL) {
             let box2 = EntityFactory.createBox(this, 150.0, -200.0, false);
             this.addEntity(box2);
+        }
+
+        if(key == Keys.SPACE) {
+            this.ball.getComponent("physics").setVelocityY(-1.0)
+          
+            
+        }
+
+
+        if(key == Keys.UP) {
+        
+            let controller = this.ball.getComponent("controller")
+            controller.velocity.y = 0.0
+        }
+
+        if(key == Keys.DOWN) {
+            let controller = this.ball.getComponent("controller")
+            controller.velocity.y = 0.0
+        }
+
+        if(key == Keys.RIGHT) {
+        
+            let controller = this.ball.getComponent("controller")
+            controller.velocity.x = 0.0
+        }
+
+        if(key == Keys.LEFT) {
+      
+            let controller = this.ball.getComponent("controller")
+
+            controller.velocity.x =0.0
         }
     }
 
     onKeyDown(key) {
+        if(key == Keys.UP) {
+        
+            let controller = this.ball.getComponent("controller")
+            controller.velocity.y = -1.0
+        }
 
+        if(key == Keys.DOWN) {
+            let controller = this.ball.getComponent("controller")
+            controller.velocity.y = 1.0
+        }
+
+        if(key == Keys.RIGHT) {
+        
+            let controller = this.ball.getComponent("controller")
+            controller.velocity.x = 1.0
+        }
+
+        if(key == Keys.LEFT) {
+      
+            let controller = this.ball.getComponent("controller")
+
+            controller.velocity.x = -1.0
+        }
     }
 
     update(dt) {
         super.update(dt);
+
+
     }
 
 }

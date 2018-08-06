@@ -124,6 +124,10 @@ export default class PhysicsComponent extends Component {
         Matter.Body.setPosition(this.body, Matter.Vector.create(x,y))
     }
 
+    getPosition() {
+        return this.body.position
+    }
+
     setRestitution(restitution) {
         this.body.restitution = restitution;
     }
