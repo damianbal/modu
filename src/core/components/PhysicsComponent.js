@@ -56,6 +56,10 @@ export default class PhysicsComponent extends Component {
             console.log('[PhysicsComponent]: body is null, did you pass correct type?')
             return;
         }
+
+        if(this.body) {
+            this.body.entity = this.getEntity()
+        }
         
         this.getSystem().getSystemComponent("physics").addBody(this.body)
 
@@ -76,8 +80,8 @@ export default class PhysicsComponent extends Component {
             transform.position.y = this.body.position.y 
             transform.rotation = this.body.angle
 
- 
-            
+            //this.body.scale(transform.scale)
+            // Matter.Body.scale(this.body, transform.scale, transform.scale)
         }
 
         
@@ -142,6 +146,23 @@ export default class PhysicsComponent extends Component {
 
     setStatic(isStatic) {
         Matter.Body.setStatic(isStatic)
+    }
+
+    scale(x = 1, y = 1) {
+      Matter.Body.scale(this.body, x, y)
+
+    }
+
+    rotate(rotation) {
+        Matter.Body.rotate(this.body, rotation)
+    }
+
+    setAngle(angle) {
+        Matter.Body.setAngle(this.body, angle)
+    }
+
+    translate(translation) {
+        Matter.Body.translate(this.body, translation)
     }
 
 }

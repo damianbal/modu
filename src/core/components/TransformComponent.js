@@ -14,6 +14,12 @@ export default class TransformComponent extends Component {
         this.rotation = 0.0
     }
 
+    transform(x = 0, y= 0, rot = 0) {
+        let transformComponent = new TransformComponent({x,y});
+        transformComponent.rotation = rot 
+        return transformComponent
+    }
+
     update(dt) {
         super.update(dt)
     }

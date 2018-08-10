@@ -37,6 +37,14 @@ export class System {
         // add entities, etc...
     }
 
+    /**
+     * Called when entity is clicked
+     * @param {Entity} entity 
+     */
+    onClickEntity(entity) {
+        alert('XD')
+    }
+
     onKeyDown(key) {
         // handle key down
         this.entities.forEach(entity => entity.onKeyDown(key))

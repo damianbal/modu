@@ -41,12 +41,28 @@ export default class Entity {
 
     }
 
+    /**
+     * Called when keyboard key is up
+     * @param {integer} key 
+     */
     onKeyUp(key) {
         // key up
     }
 
+    /**
+     * Called when keyboard key is down
+     * @param {integer} key 
+     */
     onKeyDown(key) {
         // key down
+    }
+
+    /**
+     * Called when entity is clicked, 
+     * needs SpriteComponent to work
+     */
+    onClick() {
+        
     }
 
     hasComponent(name) {

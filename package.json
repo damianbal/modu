@@ -12,7 +12,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "php -S localhost:1234 dist/",
-    "build": "parcel build index.html"
+    "build": "npm run clean && parcel build index.html",
+    "build-no-clean": "parcel build index.html",
+    "clean": "rm -rf dist/*.map && rm -rf dist/*.js"
   },
   "keywords": ["js", "game", "framework", "modern"],
   "author": "Damian Balandowski",
