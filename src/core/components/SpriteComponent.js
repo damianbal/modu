@@ -48,7 +48,8 @@ export default class SpriteComponent extends Component {
         }
 
         // add sprite to layer
-        this.getSystem().getSystemComponent("rendering").getLayer(this.getEntity().layer).addChild(this.sprite);
+        //this.getSystem().getSystemComponent("rendering").getLayer(this.getEntity().layer).addChild(this.sprite);
+        this.getSystem().rendering.getLayer(this.getEntity().layer).addChild(this.sprite)
 
         // set sprite position to position of transform component
         if (this.getEntity().hasComponent("transform")) {
@@ -177,7 +178,7 @@ export default class SpriteComponent extends Component {
      * Remove sprite from layer and destroy it
      */
     destroy() {
-        this.getSystem().getSystemComponent("rendering").getLayer(this.getEntity().layer).removeChild(this.sprite)
+        this.getSystem().rendering.getLayer(this.getEntity().layer).removeChild(this.sprite)
         this.sprite.destroy()
     }
 

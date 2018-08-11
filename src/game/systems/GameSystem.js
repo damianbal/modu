@@ -4,27 +4,21 @@ import EntityFactory from "../EntityFactory";
 import PhysicsSystemComponent from "../../core/system_components/PhysicsSystemComponent";
 import { Keys } from "../../core/Input";
 import EntityBuilder from "../../core/utils/EntityBuilder";
+import Sound from "../../core/Sound";
+import MathUtils, { Vec2 } from "../../core/utils/MathUtils";
+import SpaceshipEntity from "../entities/SpaceshipEntity";
 
 export default class GameSystem extends System {
 
     constructor() {
         super();
 
-        // create rendering component
-        this.rendering = new RenderingSystemComponent()
-
-        // add rendering component to system
-        this.addSystemComponent(this.rendering)
-
-        // create physics 
-        let physics = new PhysicsSystemComponent();
-        this.addSystemComponent(physics)
-        
-        physics.setGravity(0,0)
+        this.physics.setGravity(0,0)
     }
 
     preload() {
         this.loader.add("assets/spaceship.png")
+        this.loader.add("assets/spaceship-alt.png")
         this.loader.add("assets/box2.png")
         this.loader.add("assets/bullet.png")
         this.loader.add("assets/ground.png")
@@ -32,92 +26,36 @@ export default class GameSystem extends System {
     }
 
     setup() {
-        let e = EntityFactory.createBox(this, 105.0, 50.0, false)
+        super.setup()
 
-        this.addEntity(e)
+        this.spaceship = new SpaceshipEntity(Vec2.create(300, 300))
 
-        let e2 = EntityFactory.createBox(this, 50.0, 500.0, true)
+        this.addEntity(this.spaceship)
 
-        this.addEntity(e2)
+        //this.addEntity(EntityFactory.ground())
 
-        this.ball = EntityFactory.createBall(this, 300.0, 300.0)
-        this.addEntity(this.ball)
-
-        this.addEntity(EntityFactory.ground(this))
-
-        this.addEntity(EntityFactory.sprite(this, "assets/modu-logo.png", 100, 0, false))
+        // add top wall
+        this.addEntity(EntityFactory.createWall(this, 500, 0, 1032, 16))
+        this.addEntity(EntityFactory.createWall(this, 500, 720, 1032, 16))
+        this.addEntity(EntityFactory.createWall(this, 0, 500, 16, 1000))
+        this.addEntity(EntityFactory.createWall(this, 1024, 500, 16, 1000))
 
         this.rendering.app.ticker.add(this.update.bind(this))
     }
 
     onKeyUp(key) {
-        if(key == Keys.CTRL) {
-            let box2 = EntityFactory.createBox(this, 150.0, -200.0, false);
-            this.addEntity(box2);
+        if(key == Keys.F) {
+            this.removeEntity(this.spaceship)
         }
 
-        if(key == Keys.SPACE) {
-            this.ball.getComponent("physics").setVelocityY(-1.0)
-          
-            
-        }
-
-
-        if(key == Keys.UP) {
-        
-            let controller = this.ball.getComponent("controller")
-            controller.velocity.y = 0.0
-        }
-
-        if(key == Keys.DOWN) {
-            let controller = this.ball.getComponent("controller")
-            controller.velocity.y = 0.0
-        }
-
-        if(key == Keys.RIGHT) {
-        
-            let controller = this.ball.getComponent("controller")
-            controller.velocity.x = 0.0
-        }
-
-        if(key == Keys.LEFT) {
-      
-            let controller = this.ball.getComponent("controller")
-
-            controller.velocity.x =0.0
-        }
-    }
-
-    onKeyDown(key) {
-        if(key == Keys.UP) {
-        
-            let controller = this.ball.getComponent("controller")
-            controller.velocity.y = -1.0
-        }
-
-        if(key == Keys.DOWN) {
-            let controller = this.ball.getComponent("controller")
-            controller.velocity.y = 1.0
-        }
-
-        if(key == Keys.RIGHT) {
-        
-            let controller = this.ball.getComponent("controller")
-            controller.velocity.x = 1.0
-        }
-
-        if(key == Keys.LEFT) {
-      
-            let controller = this.ball.getComponent("controller")
-
-            controller.velocity.x = -1.0
+        if(key == Keys.C) {
+            this.spaceship = new SpaceshipEntity(Vec2.create( MathUtils.random(0, 400), MathUtils.random(0, 400) ))
+            this.addEntity(this.spaceship)
         }
     }
 
     update(dt) {
         super.update(dt);
-
-
     }
 
 }

@@ -1,7 +1,7 @@
 import Entity from "../Entity";
 
 /**
- * EntityBuilders allows to create Entity on the fly without class,
+ * EntityBuilder allows to create Entity on the fly without class,
  * might be useful for some small entities which are only displayed?
  * Do not use this for something which you know that is going to be
  * complicated, then use class approach instead.
@@ -27,6 +27,10 @@ export default class EntityBuilder {
         this.entity.tag = tag
 
         return this
+    }
+
+    setLayer(index) {
+        this.entity.layer = index
     }
 
     addComponent(c, configureComponent = (component) => {}) {

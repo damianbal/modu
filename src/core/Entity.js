@@ -38,6 +38,12 @@ export default class Entity {
         configureComponent(component)
     }
 
+    addComponents(components, configureComponent = (component) => {}) {
+        components.forEach(component => {
+            this.addComponent(component, configureComponent)
+        })
+    }
+
     update(dt) {
 
         this.components.forEach(c => {
@@ -53,7 +59,27 @@ export default class Entity {
      * @param {Entity} entity 
      */
     onCollisionStart(entity) {
-        console.log('kolizja z : ' + entity.tag)
+       
+    }
+
+    /**
+     * Called when collision between this entity 
+     * and other entity is active
+     * 
+     * @param {Entity} entity 
+     */
+    onCollisionActive(entity) {
+
+    }
+
+    /**
+     * Called when collision between this entity
+     * and other entity ended but was active 
+     * 
+     * @param {Entity} entity 
+     */
+    onCollisionEnd(entity) {
+        
     }
 
     /**
@@ -96,8 +122,6 @@ export default class Entity {
 
     setSystem(sys) {
         this.system = sys
-
-       // this.create(); // create here because some components might need system
     }
 
     getSystem() {

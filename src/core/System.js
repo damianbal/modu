@@ -1,4 +1,6 @@
 import Loader from "./Loader";
+import RenderingSystemComponent from "./system_components/RenderingSystemComponent";
+import PhysicsSystemComponent from "./system_components/PhysicsSystemComponent";
 
 /**
  * System
@@ -9,10 +11,17 @@ export class System {
     constructor() {
         this.entities = []
         this.system_components = []
+        this.manager = null
 
         this.loader = new Loader()
 
-        // keyboard
+        this.rendering = new RenderingSystemComponent()
+
+        this.physics = new PhysicsSystemComponent()
+
+        this.addSystemComponent(this.rendering)
+        this.addSystemComponent(this.physics)
+        
         window.addEventListener("keydown", event => {
             this.onKeyDown(event.keyCode)
             event.preventDefault()
@@ -37,15 +46,6 @@ export class System {
         // add entities, etc...
     }
 
-    /**
-     * Called when collision between two entities starts
-     * 
-     * @param {Entity} entityA 
-     * @param {Entity} entityB 
-     */
-    onCollisionStart(entityA, entityB) {
-        
-    }
 
     /**
      * Called when entity is clicked

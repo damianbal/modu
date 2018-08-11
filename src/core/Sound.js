@@ -2,7 +2,14 @@ import {Howl,Howler} from "howler"
 
 export default class Sound {
 
-    static play(source, volume = 1.0) {
+    /**
+     * Play sound
+     * 
+     * @param {string} source 
+     * @param {float} volume 
+     * @param {Vec2} position 
+     */
+    static play(source, volume = 1.0, position = null) {
 
         let s = new Howl({
             src: source,
@@ -11,8 +18,18 @@ export default class Sound {
 
         s.play()
 
+        if(position != null) {
+            s.pos(position.x, position.y, -1)
+        }
+
     }
 
+    /**
+     * Play music
+     * 
+     * @param {string} source 
+     * @param {float} volume 
+     */
     static playMusic(source, volume = 0.5) {
         let s = new Howl({
             src: source, volume, loop: true
@@ -23,13 +40,5 @@ export default class Sound {
         return s
     }
 
-    static playAtPosition(source, x = 0, y = 0) {
-        let s = new Howl({
-            src: source
-        })
-
-        s.pos(x,y,-1)
-        s.play()
-    }
 
 }

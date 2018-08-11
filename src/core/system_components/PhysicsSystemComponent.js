@@ -38,11 +38,27 @@ export default class PhysicsSystemComponent extends SystemComponent {
     }
 
     _collisionActive(event) {
+        event.pairs.forEach(pair => {
+            if(pair.bodyA.entity) {
+                pair.bodyA.entity.onCollisionActive(pair.bodyB.entity)
+            }  
 
+            if(pair.bodyB.entity) {
+                pair.bodyB.entity.onCollisionActive(pair.bodyA.entity)
+            }
+        })
     }
 
     _collisionEnd(event) {
+        event.pairs.forEach(pair => {
+            if(pair.bodyA.entity) {
+                pair.bodyA.entity.onCollisionEnd(pair.bodyB.entity)
+            }  
 
+            if(pair.bodyB.entity) {
+                pair.bodyB.entity.onCollisionEnd(pair.bodyA.entity)
+            }
+        })
     }
 
     setGravity(x, y) {

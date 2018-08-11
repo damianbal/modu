@@ -4,19 +4,25 @@ import * as PIXI from "pixi.js"
 
 export default class RenderingSystemComponent extends SystemComponent {
 
-    create(system) {
+    static createPIXI(width = 1024 , height = 720) {
+        let app = new PIXI.Application({
+            width,
+            height,
+            antialias: true,
+            transparent: false,
+            resolution: 1
+        })
+
+        return app
+    }
+
+    create(system, app = null) {
 
         this.name = "rendering"
 
         this.layers = []
 
-        this.app = new PIXI.Application({
-            width: 1024,
-            height: 720,
-            antialias: true,
-            transparent: false,
-            resolution: 1
-        })
+        this.app = RenderingSystemComponent.createPIXI()
 
         this.app.renderer.backgroundColor = 0xF5F5F5
 
@@ -27,6 +33,18 @@ export default class RenderingSystemComponent extends SystemComponent {
         }
 
         document.getElementById('modu').appendChild(this.app.view)
+    }
+
+    hide() {
+        this.layers.forEach(layer => {
+            layer.visible = false
+        })
+    }
+
+    show() {
+        this.layers.forEach(layer => {
+            layer.visible = true
+        })
     }
 
     getLayer(index) {

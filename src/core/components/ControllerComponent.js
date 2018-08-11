@@ -15,6 +15,7 @@ export default class ControllerComponent extends Component {
         this.velocity = velocity
         this.rotation = 0.0
         this.speed = 1.0
+        this.rotationSpeed = 1.0
 
     }
 
@@ -23,7 +24,48 @@ export default class ControllerComponent extends Component {
     }
 
     rotate(rotation) {
-        this.rotation += MathUtils.degToRad(rotation)
+        this.rotation += MathUtils.degToRad(rotation) 
+    }
+
+    rotateLeft() {
+        this.rotation -= MathUtils.degToRad(this.rotationSpeed)
+    }
+
+    rotateRight() {
+        this.rotation += MathUtils.degToRad(this.rotationSpeed)
+    }
+
+    moveLeft() {
+        this.velocity.x = -this.speed
+    }
+
+    moveRight() {
+        this.velocity.x = this.speed
+    }
+
+    moveUp() {
+        this.velocity.y = -this.speed
+    }
+
+    moveDown() {
+        this.velocity.y = this.speed
+    }
+
+    inverseX() {
+        this.velocity.x = -this.velocity.x 
+    }
+
+    inverseY() {
+        this.velocity.y = this.velocity.y
+    }
+
+    inverse() {
+        this.velocity.x = -this.velocity.x 
+        this.velocity.y = -this.velocity.y 
+    }
+
+    jump() {
+        this.velocity.y -= this.speed * 3.0
     }
 
     /**

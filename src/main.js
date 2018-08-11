@@ -1,4 +1,15 @@
 import GameSystem from "./game/systems/GameSystem";
+import SystemManager from "./core/SystemManager";
+import MenuSystem from "./game/systems/MenuSystem";
 
-let gameSystem = new GameSystem()
-gameSystem.create()
+// Create Game System 
+//let gameSystem = new GameSystem()
+ //gameSystem.create()
+
+ 
+
+ let menu = new MenuSystem()
+
+ menu.create()
+
+

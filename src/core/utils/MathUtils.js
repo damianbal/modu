@@ -8,6 +8,10 @@ class MathUtils {
     static radToDeg(rad) {
         return rad * 180 / Math.PI;
     }
+
+    static random(min, max) {
+        return min + Math.floor((Math.random() * max))
+    }
 }
 
 export let Vec2 = Matter.Vector
