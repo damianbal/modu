@@ -1,6 +1,7 @@
 import Component from "../Component";
 
 import Matter from "matter-js";
+import { Vec2 } from "../utils/MathUtils";
 
 export default class PhysicsComponent extends Component {
 
@@ -88,6 +89,10 @@ export default class PhysicsComponent extends Component {
 
     }
 
+    destroy() {
+        
+    }
+
     setMass(mass) {
         Matter.Body.setMass(this.body, mass)
     }
@@ -104,8 +109,17 @@ export default class PhysicsComponent extends Component {
         Matter.Body.setVelocity(this.body, Matter.Vector.create(this.body.velocity.x, y))
     }
 
-    applyForce(position, force) {
-        Matter.Body.applyForce(this.body, position, force)
+    applyForce(force, position = null) {
+
+        let fm = Vec2.create(force.x * this.body.mass, -force.y * this.body.mass)
+
+        let pos = this.body.position
+
+        if(position != null) {
+            pos = position
+        }
+
+        Matter.Body.applyForce(this.body, pos, fm)
     }
 
     setAngle(angle) {

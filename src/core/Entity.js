@@ -9,6 +9,11 @@ export default class Entity {
         this.tag = "Entity";
         this.name = "Entity";
         this.layer = 0
+        this.remove = false
+    }
+
+    remove() {
+        this.remove = true
     }
 
     create() {
@@ -28,7 +33,7 @@ export default class Entity {
         this.components.push(component)
 
         component.setEntity(this)
-        component.create()
+        // component.create() // created in addEntity :)
 
         configureComponent(component)
     }
@@ -39,6 +44,16 @@ export default class Entity {
             c.update(dt)
         })
 
+    }
+
+    /**
+     * Called when collision between this entity
+     * and other entity starts
+     * 
+     * @param {Entity} entity 
+     */
+    onCollisionStart(entity) {
+        console.log('kolizja z : ' + entity.tag)
     }
 
     /**
@@ -82,7 +97,7 @@ export default class Entity {
     setSystem(sys) {
         this.system = sys
 
-        // this.create(); // create here because some components might need system
+       // this.create(); // create here because some components might need system
     }
 
     getSystem() {

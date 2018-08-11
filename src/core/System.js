@@ -38,23 +38,48 @@ export class System {
     }
 
     /**
+     * Called when collision between two entities starts
+     * 
+     * @param {Entity} entityA 
+     * @param {Entity} entityB 
+     */
+    onCollisionStart(entityA, entityB) {
+        
+    }
+
+    /**
      * Called when entity is clicked
      * @param {Entity} entity 
      */
     onClickEntity(entity) {
-        alert('XD')
+        
     }
 
+    /**
+     * Called when key is down
+     * 
+     * @param {integer} key 
+     */
     onKeyDown(key) {
         // handle key down
         this.entities.forEach(entity => entity.onKeyDown(key))
     }
 
+    /**
+     * Called when key is up
+     * 
+     * @param {integer} key 
+     */
     onKeyUp(key) {
         // handle key up
         this.entities.forEach(entity => entity.onKeyUp(key))
     }
 
+    /**
+     * Add system component to this system
+     * 
+     * @param {SystemComponent} component 
+     */
     addSystemComponent(component) {
         component.system = this
         this.system_components.push(component)
@@ -67,14 +92,20 @@ export class System {
      */
     addEntity(entity) {
         entity.system = this
+
+        // create components
+        entity.components.forEach(component => {
+            component.create()
+        })
+
         this.entities.push(entity)
-        console.log('[System]: adding entity: #' + this.entities.length)
     }
 
     removeEntity(entity) {
-        this.entities.forEach(e => {
+        this.entities.forEach((e,index) => {
             if (e === entity) {
-                // TODO: remove
+                entity.destroy()
+                this.entities.splice(index, 1)
             }
         })
     }
@@ -116,12 +147,22 @@ export class System {
         return entities;
     }
 
+    /**
+     * Return system component by name
+     * 
+     * @param {string} name 
+     */
     getSystemComponent(name) {
         return this.system_components.filter(sc => {
             return sc.name == name;
         })[0]
     }
 
+    /**
+     * Update all entities and its components
+     * 
+     * @param {float} dt 
+     */
     updateEntitiesAndComponents(dt) {
 
         // update system components
@@ -134,6 +175,11 @@ export class System {
 
     }
 
+    /**
+     * Update system
+     * 
+     * @param {float} dt 
+     */
     update(dt) {
         this.updateEntitiesAndComponents(dt)
     }
