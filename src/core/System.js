@@ -15,13 +15,8 @@ export class System {
 
         this.loader = new Loader()
 
-        this.rendering = new RenderingSystemComponent()
 
-        this.physics = new PhysicsSystemComponent()
-
-        this.addSystemComponent(this.rendering)
-        this.addSystemComponent(this.physics)
-        
+        /*
         window.addEventListener("keydown", event => {
             this.onKeyDown(event.keyCode)
             event.preventDefault()
@@ -31,6 +26,11 @@ export class System {
             this.onKeyUp(event.keyCode)
             event.preventDefault()
         })
+        */
+    }
+
+    getManager() {
+        return this.manager
     }
 
     preload() {
@@ -38,8 +38,16 @@ export class System {
     }
 
     create() {
-        this.preload();
-        this.loader.load(this.setup.bind(this))
+        this.rendering = new RenderingSystemComponent()
+
+        this.physics = new PhysicsSystemComponent()
+
+        this.addSystemComponent(this.rendering)
+        this.addSystemComponent(this.physics)
+
+        // this.preload();
+        // this.loader.load(this.setup.bind(this))
+        this.setup()
     }
 
     setup() {
@@ -52,7 +60,7 @@ export class System {
      * @param {Entity} entity 
      */
     onClickEntity(entity) {
-        
+
     }
 
     /**
@@ -102,7 +110,7 @@ export class System {
     }
 
     removeEntity(entity) {
-        this.entities.forEach((e,index) => {
+        this.entities.forEach((e, index) => {
             if (e === entity) {
                 entity.destroy()
                 this.entities.splice(index, 1)

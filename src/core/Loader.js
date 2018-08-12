@@ -22,7 +22,7 @@ export default class Loader {
      * @param {string[]} images 
      */
     addImages(images) {
-        this.images.forEach(img => this.add(img))
+        images.forEach(img => this.add(img))
     }
 
     /**

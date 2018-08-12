@@ -16,14 +16,17 @@ export default class RenderingSystemComponent extends SystemComponent {
         return app
     }
 
-    create(system, app = null) {
+    create(system) {
 
         this.name = "rendering"
 
         this.layers = []
 
-        this.app = RenderingSystemComponent.createPIXI()
+        // Old
+        //this.app = RenderingSystemComponent.createPIXI()
+        //document.getElementById('modu').appendChild(this.app.view)
 
+        this.app = system.getManager().getApp()
         this.app.renderer.backgroundColor = 0xF5F5F5
 
         for (let i = 0; i < 10; i++) {
@@ -32,7 +35,11 @@ export default class RenderingSystemComponent extends SystemComponent {
             this.layers[i] = layer
         }
 
-        document.getElementById('modu').appendChild(this.app.view)
+ 
+    }
+
+    setApp(app) {
+        this.app = app
     }
 
     hide() {

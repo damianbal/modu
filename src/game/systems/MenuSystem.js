@@ -11,7 +11,7 @@ export default class MenuSystem extends System {
     }
 
     preload() {
-        this.loader.add("assets/modu-logo.png")
+      //  this.loader.add("assets/modu-logo.png")
     }
 
     onClickEntity(entity) {
@@ -38,6 +38,10 @@ export default class MenuSystem extends System {
         ).addComponent(new SpriteComponent("assets/modu-logo.png")).setTag("logo").get()
 
         this.addEntity(logo)
+
+        setTimeout(() => {
+            this.getManager().setSystem('game')
+        }, 3000)
     }
 
 }

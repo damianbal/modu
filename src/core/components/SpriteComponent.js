@@ -4,7 +4,9 @@ import * as PIXI from 'pixi.js'
 
 export default class SpriteComponent extends Component {
 
-    static name() { return "sprite" }
+    static name() {
+        return "sprite"
+    }
 
     /**
      * Create SpriteComponent, set width and height if you want 
@@ -21,14 +23,14 @@ export default class SpriteComponent extends Component {
         this.name = "sprite"
         this.sprite = null
 
-        this.width = width 
+        this.width = width
         this.height = height
     }
 
     validate() {
-        if(this.sprite == null) {
+        if (this.sprite == null) {
             console.error("sprite is null")
-            return false 
+            return false
         }
 
         return true
@@ -42,7 +44,7 @@ export default class SpriteComponent extends Component {
         // set anchor to center of sprite
         this.sprite.anchor.set(0.5, 0.5)
 
-        if(this.getSystem().getSystemComponent("rendering") == null) {
+        if (this.getSystem().getSystemComponent("rendering") == null) {
             console.error("System is missing 'rendering' component!")
             return;
         }
@@ -61,11 +63,11 @@ export default class SpriteComponent extends Component {
         }
 
         // sprite events
-        this.sprite.interactive = true 
+        this.sprite.interactive = true
         this.sprite.click = this._click.bind(this)
 
         // if width and height been supplied then apply it
-        if(this.width > 0 && this.height > 0) {
+        if (this.width > 0 && this.height > 0) {
             this.sprite.width = this.width
             this.sprite.height = this.height
         }
@@ -87,7 +89,7 @@ export default class SpriteComponent extends Component {
      * @param {boolean} visible 
      */
     setVisible(visible = true) {
-        if(!this.validate()) return;
+        if (!this.validate()) return;
 
         this.sprite.visible = visible
     }
@@ -98,8 +100,8 @@ export default class SpriteComponent extends Component {
      * @param {string} texture_path 
      */
     setTexture(texture_path) {
-        if(!this.validate()) return;
-    
+        if (!this.validate()) return;
+
         this.sprite.texture = PIXI.loader.resources[texture_path].texture
     }
 
@@ -110,7 +112,7 @@ export default class SpriteComponent extends Component {
      * @param {integer} durationSecs 
      */
     setTemporaryTexture(texture_path, durationSecs = 1.0) {
-        if(!this.validate()) return;
+        if (!this.validate()) return;
 
         let oldTex = this.sprite.texture;
         this.setTexture(texture_path)
@@ -125,7 +127,7 @@ export default class SpriteComponent extends Component {
      * @param {float} alpha 
      */
     setAlpha(alpha = 1.0) {
-        if(!this.validate()) return;
+        if (!this.validate()) return;
 
         this.sprite.alpha = alpha
     }
@@ -139,8 +141,8 @@ export default class SpriteComponent extends Component {
      * @param {float} a 
      */
     setTint(r, g, b, a = 1.0) {
-        if(!this.validate()) return;
-        
+        if (!this.validate()) return;
+
         // IMPLEMENT
     }
 
@@ -160,8 +162,8 @@ export default class SpriteComponent extends Component {
                 this.sprite.position.x = transformComponent.position.x;
                 this.sprite.position.y = transformComponent.position.y;
                 this.sprite.rotation = transformComponent.rotation;
-               // this.sprite.width = this.sprite.texture.width
-               // this.sprite.height = this.sprite.texture.height
+                // this.sprite.width = this.sprite.texture.width
+                // this.sprite.height = this.sprite.texture.height
             }
         }
     }

@@ -1,5 +1,7 @@
 import Component from "../Component";
-import MathUtils, { Vec2 } from "../utils/MathUtils";
+import MathUtils, {
+    Vec2
+} from "../utils/MathUtils";
 
 
 export default class ControllerComponent extends Component {
@@ -19,12 +21,26 @@ export default class ControllerComponent extends Component {
 
     }
 
+    rotateAtPosition(position) {
+
+        let transform = this.getEntity().getComponent("transform")
+
+        let la = Vec2.create(
+            position.x - transform.position.x,
+            position.y - transform.position.y
+        )
+
+        let rot = Math.atan2(la.y, la.x)
+        this.setAngle(rot + MathUtils.degToRad(90))
+
+    }
+
     setAngle(angle) {
-        this.rotation = angle 
+        this.rotation = angle
     }
 
     rotate(rotation) {
-        this.rotation += MathUtils.degToRad(rotation) 
+        this.rotation += MathUtils.degToRad(rotation)
     }
 
     rotateLeft() {
@@ -52,7 +68,7 @@ export default class ControllerComponent extends Component {
     }
 
     inverseX() {
-        this.velocity.x = -this.velocity.x 
+        this.velocity.x = -this.velocity.x
     }
 
     inverseY() {
@@ -60,8 +76,8 @@ export default class ControllerComponent extends Component {
     }
 
     inverse() {
-        this.velocity.x = -this.velocity.x 
-        this.velocity.y = -this.velocity.y 
+        this.velocity.x = -this.velocity.x
+        this.velocity.y = -this.velocity.y
     }
 
     jump() {
@@ -75,7 +91,7 @@ export default class ControllerComponent extends Component {
      */
     moveTo(position) {
         let pos = this.getEntity().getComponent("transform").position;
-        
+
         let vel = Vec2.create(pos.x - position.x, pos.y - position.y);
         let normalizedVel = Vec2.normalise(vel);
 
@@ -100,15 +116,15 @@ export default class ControllerComponent extends Component {
         this.velocity.x = Math.sin(this.rotation)
         this.velocity.y = -Math.cos(this.rotation)
     }
-    
+
     update(dt) {
         super.update(dt)
 
         // if there is physics then update physics component
-        if(this.getEntity().hasComponent("physics")) {
+        if (this.getEntity().hasComponent("physics")) {
             let physics = this.getEntity().getComponent("physics")
-            
-            physics.setVelocity(this.velocity.x * this.speed, this.velocity.y * this.speed) 
+
+            physics.setVelocity(this.velocity.x * this.speed, this.velocity.y * this.speed)
             physics.setAngle(this.rotation)
         }
 
@@ -119,10 +135,10 @@ export default class ControllerComponent extends Component {
 
             transformComponent.position.x += this.velocity.x * this.speed * dt
             transformComponent.position.y += this.velocity.y * this.speed * dt
-            transformComponent.rotation   = this.rotation
+            transformComponent.rotation = this.rotation
         }
 
-  
+
     }
 
 }
