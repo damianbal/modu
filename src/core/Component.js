@@ -36,6 +36,10 @@ export default class Component {
         return this.entity.getSystem()
     }
 
+    getComponentOfEntity(name) {
+        return this.entity.getComponent(name)
+    }
+
     /**
      * Called to update component,
      * components logic goes here 

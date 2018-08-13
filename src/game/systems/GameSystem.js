@@ -7,22 +7,25 @@ import EntityBuilder from "../../core/utils/EntityBuilder";
 import Sound from "../../core/Sound";
 import MathUtils, { Vec2 } from "../../core/utils/MathUtils";
 import SpaceshipEntity from "../entities/SpaceshipEntity";
+import WingManEntity from "../entities/WingMan";
 
 export default class GameSystem extends System {
 
     constructor() {
         super();
 
-        this.physics.setGravity(0,0)
+        //this.physics.setGravity(0,0)
     }
 
     preload() {
+        
+        /*
         this.loader.add("assets/spaceship.png")
         this.loader.add("assets/spaceship-alt.png")
-        this.loader.add("assets/box2.png")
-        this.loader.add("assets/bullet.png")
         this.loader.add("assets/ground.png")
         this.loader.add("assets/modu-logo.png")
+
+        */
     }
 
     setup() {
@@ -40,7 +43,11 @@ export default class GameSystem extends System {
         this.addEntity(EntityFactory.createWall(this, 0, 500, 16, 1000))
         this.addEntity(EntityFactory.createWall(this, 1024, 500, 16, 1000))
 
-        this.rendering.app.ticker.add(this.update.bind(this))
+        //this.rendering.app.ticker.add(this.update.bind(this))
+
+        this.wingMan = new WingManEntity(Vec2.create(100.0, 100.0))
+
+        this.addEntity(this.wingMan)
     }
 
     onKeyUp(key) {

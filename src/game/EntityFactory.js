@@ -16,11 +16,13 @@ export default class EntityFactory {
             x, y
         }))
         .addComponent(new SpriteComponent("assets/spaceship.png"))
-        .addComponent(PhysicsComponent.sprite(false), (component) => {
+        .addComponent(PhysicsComponent.circle(32.0, false), (component) => {
             // blah ;)
            // component.setVelocity(5.0, -1.0)
         })
         .addComponent(new ControllerComponent())
+
+        e.setTag("spaceship")
 
         return e.get();
 
@@ -29,16 +31,24 @@ export default class EntityFactory {
     static sprite(system, image, x = 0, y = 0, is_static = false) {
         return EntityBuilder.builder(system).addComponent(new TransformComponent({x,y}))
         .addComponent(new SpriteComponent(image))
-        .addComponent(PhysicsComponent.sprite(is_static)).get()
+        .addComponent(PhysicsComponent.sprite(is_static)).setTag("sprite").get()
     }
 
     static ground(system, x = 400.0, y = 700.0) {
         return EntityBuilder.builder(system).addComponent(new TransformComponent({x,y}))
         .addComponent(new SpriteComponent("assets/ground.png"))
-        .addComponent(PhysicsComponent.sprite(true)).get()
+        .addComponent(PhysicsComponent.sprite(true)).setTag("ground").get()
     }
 
-    static createBox(system, x = 10.0, y = 10.0, is_static) {
+    static createWall(system, x = 0, y = 0, w = 1000, h = 32) {
+        return EntityBuilder.builder(system).addComponent(new TransformComponent({x,y}))
+        .addComponent(new SpriteComponent("assets/ground.png", w, h), (component) => {
+            component.setAlpha(0.0)
+        })
+        .addComponent(PhysicsComponent.sprite(true)).setTag("wall").get()
+    }
+
+    static createBox(system, x = 10.0, y = 10.0, is_static, w = 0, h = 0) {
         //let pc = PhysicsComponent.rect(140, 140, is_static)
         let pc = PhysicsComponent.sprite(is_static)
         let e = EntityBuilder.builder(system)
@@ -46,7 +56,7 @@ export default class EntityFactory {
             x,
             y
         }))
-        .addComponent(new SpriteComponent("assets/box2.png"))
+        .addComponent(new SpriteComponent("assets/box2.png", w, h))
         //.addComponent(PhysicsComponent.rect(64, 64, is_static))
         .addComponent(pc);
 
