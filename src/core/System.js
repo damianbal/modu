@@ -189,6 +189,13 @@ export class System {
      * @param {float} dt 
      */
     update(dt) {
+        // remove entities which should be removed
+        this.entities.forEach(entity => {
+            if(entity.remove) {
+                this.removeEntity(entity)
+            }
+        })
+
         this.updateEntitiesAndComponents(dt)
     }
 

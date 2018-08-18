@@ -1,4 +1,5 @@
 import Component from "../Component";
+import Timer from "../Timer";
 
 
 export default class AnimatorComponent extends Component {
@@ -10,12 +11,14 @@ export default class AnimatorComponent extends Component {
         this.frameTime = frameTime 
         this.currentAnimation = null
         this.currentFrame = 0
+        this.paused = false
     }
 
     create() {
         super.create();
         // create timer
-        this.timer = setInterval(this._handleAnimation.bind(this), this.frameTime * 1000.0)
+       // this.timer = setInterval(this._handleAnimation.bind(this), this.frameTime * 1000.0)
+       this.timer = new Timer(this.frameTime, this._handleAnimation.bind(this), false)
         console.log(this.animations)
     }
 
@@ -26,7 +29,7 @@ export default class AnimatorComponent extends Component {
     _handleAnimation() {
         let sprite = this.getComponentOfEntity("sprite");
 
-       if(this.currentAnimation != null) {
+       if(this.currentAnimation != null && !this.paused) {
 
             let currAnim = this.animations.getAnimation(this.currentAnimation)
 
@@ -46,7 +49,9 @@ export default class AnimatorComponent extends Component {
     stop() {
         let sprite = this.getComponentOfEntity("sprite")
 
-        sprite.setTexture(this.animations.getAnimationt(this.currentAnimation).images[0])
+        sprite.setTexture(this.animations.getAnimation(this.currentAnimation).images[0])
+
+        this.paused = true
     }
 
     setAnimation(anim) {
@@ -61,7 +66,7 @@ export default class AnimatorComponent extends Component {
     destroy() {
         super.destroy()
 
-        clearInterval(this.timer)
+        this.timer.destroy()
     }
 
 }

@@ -21,7 +21,11 @@ export default class ControllerComponent extends Component {
 
     }
 
-    rotateAtPosition(position) {
+    /**
+     * Rotates sprite so it if facing at position
+     * @param {Vec2} position 
+     */
+    lookAt(position) {
 
         let transform = this.getEntity().getComponent("transform")
 
@@ -33,6 +37,12 @@ export default class ControllerComponent extends Component {
         let rot = Math.atan2(la.y, la.x)
         this.setAngle(rot + MathUtils.degToRad(90))
 
+    }
+
+    lookAtEntity(entity) {
+        let transform = entity.getComponent("transform")
+
+        this.lookAt(transform.getPosition())
     }
 
     setAngle(angle) {
@@ -105,7 +115,7 @@ export default class ControllerComponent extends Component {
      * @param {Entity} entity 
      */
     moveToEntity(entity) {
-        let entityPos = entity.getComponent("transform").position
+        let entityPos = entity.getComponent("transform").getPosition()
         this.moveTo(entityPos)
     }
 

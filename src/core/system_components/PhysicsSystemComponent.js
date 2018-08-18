@@ -19,6 +19,8 @@ export default class PhysicsSystemComponent extends SystemComponent {
         Matter.Events.on(this.engine, 'collisionStart', this._collisionStart.bind(this))
         Matter.Events.on(this.engine, 'collisionActive', this._collisionActive.bind(this))
         Matter.Events.on(this.engine, 'collisionEnd', this._collisionEnd.bind(this))
+
+        Matter.Engine.run(this.engine)
     }
 
 
@@ -73,7 +75,8 @@ export default class PhysicsSystemComponent extends SystemComponent {
     }
 
     update(dt) {
-        Matter.Engine.update(this.engine, dt)
+        //Matter.Engine.update(this.engine, dt)
+       // Matter.Engine.update(this.engine, 1000 / 60)
     }
 
 }

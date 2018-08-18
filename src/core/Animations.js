@@ -6,9 +6,7 @@ export default class Animations {
     }
 
     addAnimation(name, images) {
-
         this.animations[name] = { images: images };
-
     }
 
     getAnimation(name) {

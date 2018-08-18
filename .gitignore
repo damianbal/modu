@@ -3,3 +3,4 @@ dist/*.js
 dist/*.map
 dist/index.html
 node_modules
+dist/assets/

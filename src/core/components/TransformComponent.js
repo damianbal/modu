@@ -19,6 +19,13 @@ export default class TransformComponent extends Component {
         this.rotation = 0.0
     }
 
+    /**
+     * Create transform component with position and rotation
+     * 
+     * @param {float} x 
+     * @param {float} y 
+     * @param {float} rot 
+     */
     transform(x = 0, y = 0, rot = 0) {
         let transformComponent = new TransformComponent({
             x,
@@ -26,6 +33,20 @@ export default class TransformComponent extends Component {
         });
         transformComponent.rotation = rot
         return transformComponent
+    }
+
+    /**
+     * Return position
+     */
+    getPosition() {
+        return this.position
+    }
+
+    /**
+     * Return rotation
+     */
+    getRotation() {
+        return this.rotation
     }
 
     update(dt) {

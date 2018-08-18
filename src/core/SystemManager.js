@@ -86,13 +86,13 @@ export default class SystemManager {
     }
 
     onKeyDown(key) {
-        if (this.currentSystem) {
+        if (this.currentSystem != null) {
             this.currentSystem.onKeyDown(key)
         }
     }
 
     onKeyUp(key) {
-        if (this.currentSystem) {
+        if (this.currentSystem != null) {
             this.currentSystem.onKeyUp(key)
         }
     }

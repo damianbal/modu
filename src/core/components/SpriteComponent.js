@@ -133,20 +133,6 @@ export default class SpriteComponent extends Component {
     }
 
     /**
-     * Set tint of sprite
-     * 
-     * @param {integer} r 
-     * @param {integer} g 
-     * @param {integer} b 
-     * @param {float} a 
-     */
-    setTint(r, g, b, a = 1.0) {
-        if (!this.validate()) return;
-
-        // IMPLEMENT
-    }
-
-    /**
      * Update sprite, apply transform from TransformComponent
      * @param {float} dt 
      */

@@ -20,13 +20,20 @@ export default class PhysicsComponent extends Component {
     }) {
         super();
 
-        this.name = "physics"
+        this.name = PhysicsComponent.name()
 
         this.body = null;
         this.params = params
         this.type = type
     }
 
+    /**
+     * Create physics component of rect 
+     * 
+     * @param {integer} width 
+     * @param {integer} height 
+     * @param {boolean} isStatic 
+     */
     static rect(width = 64, height = 64, isStatic = false) {
         let pc = new PhysicsComponent('rect', {
             isStatic,
@@ -36,6 +43,10 @@ export default class PhysicsComponent extends Component {
         return pc
     }
 
+    /**
+     * Create physics component of sprites size
+     * @param {boolean} isStatic 
+     */
     static sprite(isStatic = false) {
         let pc = new PhysicsComponent('sprite', {
             isStatic,
@@ -45,9 +56,28 @@ export default class PhysicsComponent extends Component {
         return pc
     }
 
-    static circle(radius = 32, isStatic = false) {
+    /**
+     * Create physics component of circle, if radius is not passed then
+     * circle radius will be size of a sprite width or height, whichever is bigger 
+     * 
+     * @param {float} radius 
+     * @param {boolean} isStatic 
+     */
+    static circle(radius = null, isStatic = false) {
+        if(radius == null) {
+            return PhysicsComponent.circleSprite(isStatic)
+        }
+
         let pc = new PhysicsComponent('circle', {
             w: radius,
+            isStatic
+        })
+        return pc
+    }
+
+    static circleSprite(isStatic = false) {
+        let pc = new PhysicsComponent('circle_sprite', {
+            w: 0, 
             isStatic
         })
         return pc
@@ -71,6 +101,12 @@ export default class PhysicsComponent extends Component {
         } else if (this.type == 'circle') {
             this.body = Matter.Bodies.circle(transform.position.x, transform.position.y, this.params.w, {
                 isStatic: this.params.isStatic
+            })
+        }
+        else if(this.type == 'circle_sprite') {
+            let radius = s.getWidth() > s.getHeight() ? s.getWidth() : s.getHeight();
+            this.body = Matter.Bodies.circle(transform.position.x, transform.position.y, radius, {
+                isStatic: this.params.isStatic,
             })
         }
 
@@ -102,8 +138,6 @@ export default class PhysicsComponent extends Component {
             transform.position.y = this.body.position.y
             transform.rotation = this.body.angle
 
-            //this.body.scale(transform.scale)
-            // Matter.Body.scale(this.body, transform.scale, transform.scale)
         }
 
 
@@ -111,7 +145,7 @@ export default class PhysicsComponent extends Component {
     }
 
     destroy() {
-
+        
     }
 
     setMass(mass) {
@@ -163,6 +197,9 @@ export default class PhysicsComponent extends Component {
         Matter.Body.setPosition(this.body, Matter.Vector.create(x, y))
     }
 
+    /**
+     * Use TransformComponent to get position
+     */
     getPosition() {
         return this.body.position
     }
@@ -185,7 +222,6 @@ export default class PhysicsComponent extends Component {
 
     scale(x = 1, y = 1) {
         Matter.Body.scale(this.body, x, y)
-
     }
 
     rotate(rotation) {
