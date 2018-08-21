@@ -12,7 +12,7 @@ export default class Entity {
         this.remove = false
     }
 
-    remove() {
+    removeEntity() {
         this.remove = true
     }
 

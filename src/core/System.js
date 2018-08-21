@@ -111,7 +111,7 @@ export class System {
 
     removeEntity(entity) {
         this.entities.forEach((e, index) => {
-            if (e === entity) {
+            if (e == entity) {
                 entity.destroy()
                 this.entities.splice(index, 1)
             }

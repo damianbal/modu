@@ -236,4 +236,8 @@ export default class PhysicsComponent extends Component {
         Matter.Body.translate(this.body, translation)
     }
 
+    destroy() {
+        this.getSystem().getSystemComponent("physics")._removeBody(this.body)
+    }
+
 }

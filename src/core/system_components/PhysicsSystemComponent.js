@@ -23,7 +23,9 @@ export default class PhysicsSystemComponent extends SystemComponent {
         Matter.Engine.run(this.engine)
     }
 
-
+    _removeBody(body) {
+        Matter.World.remove(this.world, body)
+    }
 
     _collisionStart(event) {
         event.pairs.forEach(pair => {

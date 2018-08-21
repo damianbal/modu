@@ -54,6 +54,10 @@ export default class RenderingSystemComponent extends SystemComponent {
         })
     }
 
+    setBackgroundColor(color) {
+            this.app.renderer.backgroundColor = color
+    }
+
     getLayer(index) {
         return this.layers[index]
     }
