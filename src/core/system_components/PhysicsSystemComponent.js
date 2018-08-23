@@ -76,6 +76,17 @@ export default class PhysicsSystemComponent extends SystemComponent {
         Matter.World.add(this.world, body)
     }
 
+    addConstraint({ entityA, entityB, damping = 0, stiffness = 1 }) {
+        let constraint = Matter.Constraint.create({
+            bodyA: entityA.getComponent("physics").body,
+            bodyB: entityB.getComponent("physics").body,
+            damping,
+            stiffness
+        })
+
+        Matter.World.addConstraint(this.world, constraint)
+    }
+
     update(dt) {
         //Matter.Engine.update(this.engine, dt)
        // Matter.Engine.update(this.engine, 1000 / 60)

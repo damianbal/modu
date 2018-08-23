@@ -12,10 +12,16 @@ export default class Entity {
         this.remove = false
     }
 
+    /**
+     * Remove entity from system
+     */
     removeEntity() {
         this.remove = true
     }
 
+    /**
+     * Called by system to create entity
+     */
     create() {
         // TODO: create all components 
 
@@ -29,6 +35,12 @@ export default class Entity {
 
     }
 
+    /**
+     * Add component to entity
+     * 
+     * @param {string} component 
+     * @param {*} configureComponent 
+     */
     addComponent(component, configureComponent = (component) => {}) {
         this.components.push(component)
 
@@ -38,12 +50,23 @@ export default class Entity {
         configureComponent(component)
     }
 
-    addComponents(components, configureComponent = (component) => {}) {
+    /**
+     * Add components to entity
+     * 
+     * @param {array} components 
+     * @param {*} configureComponent 
+     */
+    addComponents(components) {
         components.forEach(component => {
-            this.addComponent(component, configureComponent)
+            this.addComponent(component)
         })
     }
 
+    /**
+     * Update entity
+     * 
+     * @param {float} dt 
+     */
     update(dt) {
 
         this.components.forEach(c => {
@@ -106,6 +129,11 @@ export default class Entity {
         
     }
 
+    /**
+     * Check if entity has component
+     * 
+     * @param {string} name 
+     */
     hasComponent(name) {
 
         return this.components.filter(c => {
@@ -114,20 +142,37 @@ export default class Entity {
 
     }
 
+    /**
+     * Get component
+     * 
+     * @param {string} name 
+     */
     getComponent(name) {
         return this.components.filter(c => {
             return c.name == name;
         })[0]
     }
 
+    /**
+     * Set system that this entity belongs to
+     * Note: called by system, do not use it
+     * 
+     * @param {System} sys 
+     */
     setSystem(sys) {
         this.system = sys
     }
 
+    /**
+     * Return system that this entity belongs to
+     */
     getSystem() {
         return this.system
     }
 
+    /**
+     * Destroy all the components
+     */
     destroy() {
         this.components.forEach(c => c.destroy())
     }

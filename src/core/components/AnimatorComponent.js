@@ -4,6 +4,12 @@ import Timer from "../Timer";
 
 export default class AnimatorComponent extends Component {
 
+    /**
+     * Construct AnimatorComponent
+     * 
+     * @param {float} frameTime 
+     * @param {Animations} anims 
+     */
     constructor(frameTime = 0.20, anims = null) {
         super()
 
@@ -12,8 +18,13 @@ export default class AnimatorComponent extends Component {
         this.currentAnimation = null
         this.currentFrame = 0
         this.paused = false
+        this.played  =false
+        this.name = "animator"
     }
 
+    /**
+     * Create animator component
+     */
     create() {
         super.create();
         // create timer
@@ -22,14 +33,22 @@ export default class AnimatorComponent extends Component {
         console.log(this.animations)
     }
 
+    /**
+     * Set animations that this Animator can use
+     * 
+     * @param {Animations} animations 
+     */
     setAnimations(animations) {
         this.animations = animations
     }
 
+    /**
+     * Handles animation loop
+     */
     _handleAnimation() {
         let sprite = this.getComponentOfEntity("sprite");
 
-       if(this.currentAnimation != null && !this.paused) {
+       if(this.currentAnimation != null && !this.paused && !this.played) {
 
             let currAnim = this.animations.getAnimation(this.currentAnimation)
 
@@ -37,6 +56,7 @@ export default class AnimatorComponent extends Component {
 
             if(this.currentFrame >= maxFrames) {
                 this.currentFrame = 0
+                this.played = true
             }
 
             sprite.setTexture(currAnim.images[this.currentFrame])
@@ -54,15 +74,33 @@ export default class AnimatorComponent extends Component {
         this.paused = true
     }
 
+    /**
+     * Set current animation
+     * 
+     * @param {string} anim 
+     */
     setAnimation(anim) {
         this.currentFrame = 0
         this.currentAnimation = anim
     }
 
+    play(anim) {
+        this.played = false 
+        this.setAnimation(anim)
+    }
+
+    /**
+     * Update component
+     * 
+     * @param {float} dt 
+     */
     update(dt) {
         super.update(dt)
     }
 
+    /**
+     * Destroy component
+     */
     destroy() {
         super.destroy()
 

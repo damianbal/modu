@@ -43,6 +43,12 @@ export default class SystemManager {
         return this.app
     }
 
+    /**
+     * Add system to system manager
+     * 
+     * @param {string} name 
+     * @param {System} system 
+     */
     addSystem(name, system) {
         system.manager = this
 
@@ -54,6 +60,11 @@ export default class SystemManager {
         this.currentSystem = this.systems[0].sys
     }
 
+    /**
+     * Set active system
+     * 
+     * @param {string} name 
+     */
     setSystem(name) {
         this.currentSystem.rendering.hide()
 
@@ -68,10 +79,16 @@ export default class SystemManager {
         return this.loader
     }
 
+    /**
+     * Load assets and then run loaded method to create systems
+     */
     create() {
         this.loader.load(this.loaded.bind(this))
     }
 
+    /**
+     * Create systems and run game loop
+     */
     loaded() {
 
 

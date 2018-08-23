@@ -4,10 +4,18 @@
  */
 export default class SystemComponent {
 
+    /**
+     * Create system component
+     */
     create() {
         this.name = "system"
     }
 
+    /**
+     * Update system component
+     * 
+     * @param {float} dt 
+     */
     update(dt) {
 
     }

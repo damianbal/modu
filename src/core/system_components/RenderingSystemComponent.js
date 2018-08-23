@@ -1,6 +1,7 @@
 import SystemComponent from "../SystemComponent";
 
 import * as PIXI from "pixi.js"
+import { Vec2 } from "../utils/MathUtils";
 
 export default class RenderingSystemComponent extends SystemComponent {
 
@@ -35,6 +36,11 @@ export default class RenderingSystemComponent extends SystemComponent {
             this.layers[i] = layer
         }
 
+        this.app.stage.interactive =true
+        this.app.stage.mousedown = function(e) {
+            alert('xd')
+        }
+
  
     }
 
@@ -56,6 +62,17 @@ export default class RenderingSystemComponent extends SystemComponent {
 
     setBackgroundColor(color) {
             this.app.renderer.backgroundColor = color
+    }
+
+    /**
+     * Returns global mouse position
+     * 
+     * @return Vec2
+     */
+    getMousePosition() {
+        let mx = this.app.renderer.plugins.interaction.mouse.global.x 
+        let my = this.app.renderer.plugins.interaction.mouse.global.y
+        return Vec2.create(mx, my)
     }
 
     getLayer(index) {

@@ -43,6 +43,10 @@ export default class PhysicsComponent extends Component {
         return pc
     }
 
+    static trigger() {
+        // TODO: implement
+    }
+
     /**
      * Create physics component of sprites size
      * @param {boolean} isStatic 
@@ -148,10 +152,21 @@ export default class PhysicsComponent extends Component {
         
     }
 
+    /**
+     * Set mass of body
+     * 
+     * @param {float} mass 
+     */
     setMass(mass) {
         Matter.Body.setMass(this.body, mass)
     }
 
+    /**
+     * Set velocity
+     * 
+     * @param {float} x 
+     * @param {float} y 
+     */
     setVelocity(x, y) {
         Matter.Body.setVelocity(this.body, Matter.Vector.create(x, y))
     }

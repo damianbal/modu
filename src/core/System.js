@@ -1,6 +1,7 @@
 import Loader from "./Loader";
 import RenderingSystemComponent from "./system_components/RenderingSystemComponent";
 import PhysicsSystemComponent from "./system_components/PhysicsSystemComponent";
+import { Vec2 } from "./utils/MathUtils";
 
 /**
  * System
@@ -50,10 +51,13 @@ export class System {
         this.setup()
     }
 
+    /**
+     * Called after creating components, you can safely setup 
+     * your components, entities here
+     */
     setup() {
         // add entities, etc...
     }
-
 
     /**
      * Called when entity is clicked
@@ -71,6 +75,10 @@ export class System {
     onKeyDown(key) {
         // handle key down
         this.entities.forEach(entity => entity.onKeyDown(key))
+    }
+
+    onMouseClick(mouse_position) {
+        
     }
 
     /**
@@ -109,6 +117,12 @@ export class System {
         this.entities.push(entity)
     }
 
+    /**
+     * Destroys entity, do not call it, use removeEntity method
+     * on Entity instances
+     * 
+     * @param {Entity} entity 
+     */
     removeEntity(entity) {
         this.entities.forEach((e, index) => {
             if (e == entity) {
@@ -197,6 +211,12 @@ export class System {
         })
 
         this.updateEntitiesAndComponents(dt)
+    }
+
+    getMousePosition() {
+        if(!this.rendering) return Vec2.create(0,0) 
+
+        return this.rendering.getMousePosition()
     }
 
 }
