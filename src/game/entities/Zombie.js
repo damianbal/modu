@@ -24,6 +24,7 @@ export default class Zombie extends Entity {
         this.text = new TextComponent("Zombie")
         this.text.localPosition.y = -50.0
 
+
         this.tag = "Zombie"
         this.layer = 4
 

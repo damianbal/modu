@@ -12,10 +12,7 @@ export default class TextComponent extends Component {
     /**
      * Create TextComponent
      * 
-     * 
-     * @param {string} image 
-     * @param {integer} width 
-     * @param {integer} height 
+     * @param {string} text
      */
     constructor(text = "Text") {
         super()
@@ -28,20 +25,21 @@ export default class TextComponent extends Component {
 
 
     create() {
-
         this.textNode = new PIXI.Text(this.text)
         this.textNode.anchor.x = 0.5
         this.textNode.anchor.y = 0.5
 
         this.getSystem().rendering.getLayer(this.getEntity().layer).addChild(this.textNode)
 
-        // set sprite position to position of transform component
         if (this.getEntity().hasComponent("transform")) {
             let transformComponent = this.getEntity().getComponent("transform");
 
             this.textNode.position.x = transformComponent.position.x;
             this.textNode.position.y = transformComponent.position.y;
-            //this.textNode.rotation = transformComponent.rotation
+
+            if(this.rotationEnabled) {
+                this.textNode.rotation = transformComponent.rotation;
+            }
         }
     }
 

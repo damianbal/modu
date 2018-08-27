@@ -12,6 +12,7 @@ import Zombie from "../entities/Zombie";
 import Player from "../entities/Player";
 import Bullet from "../entities/Bullet";
 import PoliceCar from "../entities/PoliceCar";
+import TextEntity from "../../core/entities/TextEntity";
 
 export default class GameSystem extends System {
 
@@ -63,6 +64,9 @@ export default class GameSystem extends System {
       }
 
       this.wingMan = new WingManEntity(Vec2.create(300,300))
+
+      this.addEntity(new TextEntity("This is text", Vec2.create(300.0, 300.0)))
+
       this.addEntity(this.wingMan)
     }
 
