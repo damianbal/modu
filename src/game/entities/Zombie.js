@@ -5,6 +5,7 @@ import PhysicsComponent from "../../core/components/PhysicsComponent";
 import ControllerComponent from "../../core/components/ControllerComponent";
 import MathUtils from "../../core/utils/MathUtils";
 import PhysicsComponentFactory from "../../core/PhysicsComponentFactory";
+import TextComponent from "../../core/components/TextComponent";
 
 export default class Zombie extends Entity {
 
@@ -20,10 +21,13 @@ export default class Zombie extends Entity {
         this.controller = new ControllerComponent()
         this.player = null
 
-        this.tag = "Zombie"
-            this.layer = 4
+        this.text = new TextComponent("Zombie")
+        this.text.localPosition.y = -50.0
 
-        this.addComponents([this.transform, this.sprite, this.physics, this.controller])
+        this.tag = "Zombie"
+        this.layer = 4
+
+        this.addComponents([this.transform, this.sprite, this.physics, this.controller, this.text])
 
         this.controller.speed = 0.5
     }
