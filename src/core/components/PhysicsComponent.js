@@ -25,92 +25,41 @@ export default class PhysicsComponent extends Component {
         this.body = null;
         this.params = params
         this.type = type
+        this.sensor = false
     }
 
-    /**
-     * Create physics component of rect 
-     * 
-     * @param {integer} width 
-     * @param {integer} height 
-     * @param {boolean} isStatic 
-     */
-    static rect(width = 64, height = 64, isStatic = false) {
-        let pc = new PhysicsComponent('rect', {
-            isStatic,
-            w: width,
-            h: height
-        })
-        return pc
-    }
-
-    static trigger() {
-        // TODO: implement
-    }
-
-    /**
-     * Create physics component of sprites size
-     * @param {boolean} isStatic 
-     */
-    static sprite(isStatic = false) {
-        let pc = new PhysicsComponent('sprite', {
-            isStatic,
-            width: 0,
-            height: 0
-        })
-        return pc
-    }
-
-    /**
-     * Create physics component of circle, if radius is not passed then
-     * circle radius will be size of a sprite width or height, whichever is bigger 
-     * 
-     * @param {float} radius 
-     * @param {boolean} isStatic 
-     */
-    static circle(radius = null, isStatic = false) {
-        if(radius == null) {
-            return PhysicsComponent.circleSprite(isStatic)
-        }
-
-        let pc = new PhysicsComponent('circle', {
-            w: radius,
-            isStatic
-        })
-        return pc
-    }
-
-    static circleSprite(isStatic = false) {
-        let pc = new PhysicsComponent('circle_sprite', {
-            w: 0, 
-            isStatic
-        })
-        return pc
-    }
 
     create() {
         let transform = this.getEntity().getComponent("transform");
 
+        // get sprite component
         let s = this.getEntity().getComponent("sprite");
 
-        console.log('Sprite component (physics): ', s.getWidth())
+        if(s) {
+            console.log('Sprite component (physics): ', s.getWidth(), s.getHeight())
+        }
 
         if (this.type == 'rect') {
             this.body = Matter.Bodies.rectangle(transform.position.x, transform.position.y, this.params.w, this.params.h, {
-                isStatic: this.params.isStatic
+                isStatic: this.params.isStatic,
+                isSensor: this.sensor
             })
-        } else if (this.type == 'sprite') { // TODO: sprite as circle as well?
+        } else if (this.type == 'sprite') { 
             this.body = Matter.Bodies.rectangle(transform.position.x, transform.position.y, s.getWidth(), s.getHeight(), {
-                isStatic: this.params.isStatic
+                isStatic: this.params.isStatic,
+                isSensor: this.sensor
             })
         } else if (this.type == 'circle') {
             this.body = Matter.Bodies.circle(transform.position.x, transform.position.y, this.params.w, {
-                isStatic: this.params.isStatic
+                isStatic: this.params.isStatic,
+                isSensor: this.sensor
             })
         }
         else if(this.type == 'circle_sprite') {
             let radius = s.getWidth() > s.getHeight() ? s.getWidth() : s.getHeight();
             this.body = Matter.Bodies.circle(transform.position.x, transform.position.y, radius, {
                 isStatic: this.params.isStatic,
+                isSensor: this.sensor
             })
         }
 
@@ -119,22 +68,28 @@ export default class PhysicsComponent extends Component {
             return;
         }
 
+
+        // pass reference of this entity to body
         if (this.body) {
             this.body.entity = this.getEntity()
         }
 
+        // add body to world
         this.getSystem().getSystemComponent("physics").addBody(this.body)
 
         console.log("Created physics component", this.body)
     }
 
+    /**
+     * Updates transform component to have position and rotation of 
+     * body so sprite can access it and display at correct position and rotation
+     * 
+     * @param {float} dt 
+     */
     update(dt) {
 
         super.update(dt);
 
-
-
-        // TODO: set body position to transform :)
         if (this.body != null) {
             let transform = this.getEntity().getComponent("transform");
 
@@ -144,12 +99,6 @@ export default class PhysicsComponent extends Component {
 
         }
 
-
-
-    }
-
-    destroy() {
-        
     }
 
     /**
@@ -171,14 +120,30 @@ export default class PhysicsComponent extends Component {
         Matter.Body.setVelocity(this.body, Matter.Vector.create(x, y))
     }
 
+    /**
+     * Set X velocity
+     * 
+     * @param {float} x 
+     */
     setVelocityX(x) {
         Matter.Body.setVelocity(this.body, Matter.Vector.create(x, this.body.velocity.y))
     }
 
+    /**
+     * Set Y velocity
+     * 
+     * @param {float} y 
+     */
     setVelocityY(y) {
         Matter.Body.setVelocity(this.body, Matter.Vector.create(this.body.velocity.x, y))
     }
 
+    /**
+     * Apply force
+     * 
+     * @param {Vec2} force 
+     * @param {Vec2} position 
+     */
     applyForce(force, position = null) {
 
         let fm = Vec2.create(force.x * this.body.mass, -force.y * this.body.mass)
@@ -192,22 +157,39 @@ export default class PhysicsComponent extends Component {
         Matter.Body.applyForce(this.body, pos, fm)
     }
 
-    setAngle(angle) {
-        Matter.Body.setAngle(this.body, angle)
-    }
-
+    /**
+     * Set angular velocity of body
+     * 
+     * @param {Vec2} velocity 
+     */
     setAngularVelocity(velocity) {
         Matter.Body.setAngularVelocity(this.body, velocity)
     }
 
+    /**
+     * Set density
+     * 
+     * @param {float} density 
+     */
     setDensity(density) {
         Matter.Body.setDensity(this.body, density)
     }
 
+    /**
+     * Set inertia
+     * 
+     * @param {float} inertia 
+     */
     setInertia(inertia) {
         Matter.Body.setInertia(this.body, inertia)
     }
 
+    /**
+     * Set position of body
+     * 
+     * @param {float} x 
+     * @param {float} y 
+     */
     setPosition(x, y) {
         Matter.Body.setPosition(this.body, Matter.Vector.create(x, y))
     }
@@ -219,34 +201,72 @@ export default class PhysicsComponent extends Component {
         return this.body.position
     }
 
+    /**
+     * Restitution
+     * 
+     * @param {float} restitution 
+     */
     setRestitution(restitution) {
         this.body.restitution = restitution;
     }
 
+    /**
+     * Friction
+     * 
+     * @param {float} friction 
+     */
     setFriction(friction) {
         this.body.friction = friction
     }
 
+    /**
+     * Timescale, well you can speed up or slow down the body
+     * 
+     * @param {float} timescale 
+     */
     setTimescale(timescale) {
         this.body.timeScale = timescale
     }
 
-    setStatic(isStatic) {
+    /**
+     * Set body to be static or no static
+     * 
+     * @param {boolean} isStatic 
+     */
+    setStatic(isStatic = true) {
         Matter.Body.setStatic(isStatic)
     }
 
-    scale(x = 1, y = 1) {
-        Matter.Body.scale(this.body, x, y)
-    }
-
+    /**
+     * Rotate body
+     * 
+     * @param {float} rotation 
+     */
     rotate(rotation) {
         Matter.Body.rotate(this.body, rotation)
     }
 
+    /**
+     * Set angle in radians
+     * @param {float} angle
+     */
     setAngle(angle) {
         Matter.Body.setAngle(this.body, angle)
     }
 
+    /**
+     * Set is sensor
+     * @param {boolean} sensor 
+     */
+    setIsSensor(sensor = true) {
+        this.body.isSensor = sensor 
+    }
+
+    /**
+     * Translate 
+     * 
+     * @param {Vec2} translation 
+     */
     translate(translation) {
         Matter.Body.translate(this.body, translation)
     }

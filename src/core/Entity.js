@@ -9,14 +9,14 @@ export default class Entity {
         this.tag = "Entity";
         this.name = "Entity";
         this.layer = 0
-        this.remove = false
+        this._remove = false
     }
 
     /**
      * Remove entity from system
      */
-    removeEntity() {
-        this.remove = true
+    remove() {
+        this._remove = true
     }
 
     /**
@@ -127,6 +127,13 @@ export default class Entity {
      */
     onClick() {
         
+    }
+
+    /**
+     * Called when right mouse is clicked (not on that Entity, anywhere)
+     */
+    onMouseDown(position) {
+
     }
 
     /**

@@ -6,6 +6,7 @@ import PhysicsComponent from "../../core/components/PhysicsComponent";
 import ControllerComponent from "../../core/components/ControllerComponent";
 import { Keys } from "../../core/Input";
 import Sound from "../../core/Sound";
+import PhysicsComponentFactory from "../../core/PhysicsComponentFactory";
 
 export default class SpaceshipEntity extends Entity {
 
@@ -14,7 +15,7 @@ export default class SpaceshipEntity extends Entity {
 
         this.transform = new TransformComponent({x: position.x, y: position.y})
         this.sprite = new SpriteComponent("assets/spaceship.png")
-        this.physics = PhysicsComponent.circle(54.0, false)
+        this.physics = PhysicsComponentFactory.circle(54.0, false)
         this.controller = new ControllerComponent()
 
         this.tag = "Spaceship"

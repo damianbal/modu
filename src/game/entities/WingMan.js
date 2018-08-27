@@ -8,6 +8,7 @@ import { Keys } from "../../core/Input";
 import Sound from "../../core/Sound";
 import AnimatorComponent from "../../core/components/AnimatorComponent";
 import { wingManAnimations } from "../Assets";
+import PhysicsSystemComponent from "../../core/system_components/PhysicsSystemComponent";
 
 export default class WingManEntity extends Entity {
 
@@ -20,9 +21,12 @@ export default class WingManEntity extends Entity {
         this.animator = new AnimatorComponent(0.05, wingManAnimations)
         this.animator.setAnimation("wing")
 
-        this.tag = "WingMan"
+        //this.physics = PhysicsComponent.circle(128.0, false)
 
-        this.addComponents([this.transform, this.sprite, this.animator])
+        this.tag = "WingMan"
+        this.layer = 6
+
+        this.addComponents([this.transform, this.sprite, this.animator/*, this.physics*/])
     }
 
 
@@ -30,6 +34,13 @@ export default class WingManEntity extends Entity {
         super.setup()
 
        
+    }
+
+    onKeyUp(key) {
+       
+        if(key == Keys.F) {
+            this.animator.stop()
+        }
     }
 
     update(dt) {

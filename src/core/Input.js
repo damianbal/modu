@@ -51,5 +51,5 @@ export const Keys = {
 }
 
 export default class Input {
-
+    //
 }

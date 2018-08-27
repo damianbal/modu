@@ -20,6 +20,7 @@ export default class AnimatorComponent extends Component {
         this.paused = false
         this.played  =false
         this.name = "animator"
+        this.loop = true
     }
 
     /**
@@ -48,7 +49,7 @@ export default class AnimatorComponent extends Component {
     _handleAnimation() {
         let sprite = this.getComponentOfEntity("sprite");
 
-       if(this.currentAnimation != null && !this.paused && !this.played) {
+       if(this.currentAnimation != null && !this.paused) {
 
             let currAnim = this.animations.getAnimation(this.currentAnimation)
 
@@ -61,7 +62,9 @@ export default class AnimatorComponent extends Component {
 
             sprite.setTexture(currAnim.images[this.currentFrame])
 
-            this.currentFrame ++
+          
+                this.currentFrame ++
+            
        }
      
     }

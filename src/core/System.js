@@ -77,8 +77,20 @@ export class System {
         this.entities.forEach(entity => entity.onKeyDown(key))
     }
 
-    onMouseClick(mouse_position) {
-        
+    /**
+     * Called when mouse right button is pressed, 
+     * you can access mouse position with getMousePosition
+     */
+    onMouseDown(position) {
+        this.entities.forEach(entity => entity.onMouseDown(position))
+    }
+
+    /**
+     * Called when mouse is moved,
+     * you can access mouse position with getMousePosition
+     */
+    onMouseMove() {
+
     }
 
     /**
@@ -175,9 +187,14 @@ export class System {
      * @param {string} name 
      */
     getSystemComponent(name) {
-        return this.system_components.filter(sc => {
-            return sc.name == name;
-        })[0]
+        let sc = this.system_components.find(sc => sc.name == name)
+ 
+        if(sc == undefined) {
+            console.warn('System component not found: ' + name)
+            return;
+        }
+
+        return sc;
     }
 
     /**
@@ -205,12 +222,20 @@ export class System {
     update(dt) {
         // remove entities which should be removed
         this.entities.forEach(entity => {
-            if(entity.remove) {
+            if(entity._remove) {
                 this.removeEntity(entity)
             }
         })
 
         this.updateEntitiesAndComponents(dt)
+    }
+
+    getWidth() {
+        return this.rendering.app.renderer.width 
+    }
+
+    getHeight() {
+        return this.rendering.app.renderer.height
     }
 
     getMousePosition() {

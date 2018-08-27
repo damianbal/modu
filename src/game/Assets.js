@@ -13,6 +13,18 @@ const assets = [
     "assets/wingMan3.png",
     "assets/wingMan4.png",
     "assets/wingMan5.png",
+    "assets/zombie.png",
+    "assets/bullet.png",
+    "assets/player.png",
+    "assets/building.png",
+    "assets/blood.png",
+    "assets/z.png",
+    "assets/_player.png",
+    "assets/bg.png",
+    "assets/obj_barrels.png",
+    "assets/p1.png",
+    "assets/p2.png",
+    "assets/p3.png",
 ]
 
 export let wingManAnimations = AnimationsBuilder.builder().addAnimation("wing", [
@@ -27,5 +39,10 @@ export let wingManAnimations = AnimationsBuilder.builder().addAnimation("wing", 
     "assets/wingMan1.png",
 ]).getAnimations();
 
+export let policeCarAnimations = AnimationsBuilder.builder().addAnimation("sirens", [
+    "assets/p1.png",
+    "assets/p2.png",
+    "assets/p3.png"
+]).getAnimations()
 
 export default assets

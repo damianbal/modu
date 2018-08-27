@@ -4,8 +4,10 @@ import SpriteComponent from "../../core/components/SpriteComponent";
 import PhysicsComponent from "../../core/components/PhysicsComponent";
 import ControllerComponent from "../../core/components/ControllerComponent";
 import PhysicsComponentFactory from "../../core/PhysicsComponentFactory";
+import AnimatorComponent from "../../core/components/AnimatorComponent";
+import { policeCarAnimations } from "../Assets";
 
-export default class BaseEntity extends Entity {
+export default class PoliceCar extends Entity {
 
     constructor(position = Vec2.create(0, 0)) {
         super()
@@ -14,13 +16,15 @@ export default class BaseEntity extends Entity {
             x: position.x,
             y: position.y
         })
-        this.sprite = new SpriteComponent("SPRITE")
-        this.physics = PhysicsComponentFactory.rect(32,32,false)
+        this.sprite = new SpriteComponent("assets/p1.png", 200, 200)
+        this.physics = PhysicsComponentFactory.sprite(false)
         this.controller = new ControllerComponent()
+        this.animator = new AnimatorComponent(0.15, policeCarAnimations)
+        this.animator.setAnimation("sirens")
 
-        this.tag = "BaseEntity"
+        this.tag = "PoliceCar"
 
-        this.addComponents([this.transform, this.sprite, this.physics, this.controller])
+        this.addComponents([this.transform, this.sprite, this.physics, this.controller, this.animator])
     }
 
     setup() {
@@ -29,7 +33,5 @@ export default class BaseEntity extends Entity {
 
     update(dt) {
         super.update(dt)
-
-        // this.controller.moveForward()
     }
 }

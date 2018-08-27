@@ -37,10 +37,9 @@ export default class RenderingSystemComponent extends SystemComponent {
         }
 
         this.app.stage.interactive =true
-        this.app.stage.mousedown = function(e) {
-            alert('xd')
+        this.app.stage.mousedown = (e) => {
+           this.system.onMouseDown(this.system.getMousePosition())
         }
-
  
     }
 

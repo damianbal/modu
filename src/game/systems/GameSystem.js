@@ -8,56 +8,86 @@ import Sound from "../../core/Sound";
 import MathUtils, { Vec2 } from "../../core/utils/MathUtils";
 import SpaceshipEntity from "../entities/SpaceshipEntity";
 import WingManEntity from "../entities/WingMan";
+import Zombie from "../entities/Zombie";
+import Player from "../entities/Player";
+import Bullet from "../entities/Bullet";
+import PoliceCar from "../entities/PoliceCar";
 
 export default class GameSystem extends System {
 
     constructor() {
         super();
 
-        //this.physics.setGravity(0,0)
-    }
-
-    preload() {
-        
-        /*
-        this.loader.add("assets/spaceship.png")
-        this.loader.add("assets/spaceship-alt.png")
-        this.loader.add("assets/ground.png")
-        this.loader.add("assets/modu-logo.png")
-
-        */
+        this.wingMan = null
     }
 
     setup() {
         super.setup()
 
-        this.spaceship = new SpaceshipEntity(Vec2.create(300, 300))
+       this.physics.setGravity(0, 0)
 
-        this.addEntity(this.spaceship)
-
-        //this.addEntity(EntityFactory.ground())
-
-        // add top wall
+ 
+        // add walls
         this.addEntity(EntityFactory.createWall(this, 500, 0, 1032, 16))
         this.addEntity(EntityFactory.createWall(this, 500, 720, 1032, 16))
         this.addEntity(EntityFactory.createWall(this, 0, 500, 16, 1000))
         this.addEntity(EntityFactory.createWall(this, 1024, 500, 16, 1000))
 
-        //this.rendering.app.ticker.add(this.update.bind(this))
 
-        this.wingMan = new WingManEntity(Vec2.create(100.0, 100.0))
+        this.addEntity(EntityFactory.createBG(this, this.getWidth() / 2, this.getHeight() / 2))
 
-        this.addEntity(this.wingMan)
+        this.addEntity(new PoliceCar(Vec2.create(100.0, 100.0)))
+
+        // add player 
+            //    this.addEntity(new Zombie(Vec2.create(100, 100)))
+            this.player = new Player(Vec2.create(400, 400))
+
+            this.addEntity(this.player)
+
+        // add zombie
+        for(let i = 0; i < 5; i++) {
+            let z = new Zombie(Vec2.create(MathUtils.random(0, 800), MathUtils.random(0, 600)))
+            this.addEntity(z)
+
+            //this.physics.addConstraint({entityA: this.player, entityB: z, damping: 0.5, stiffness: 0.1})
+        }
+
+
+    this.rendering.setBackgroundColor(0x303030)
+        
+     //this.addEntity(EntityFactory.building(this, 600, 400))
+      //this.addEntity(EntityFactory.building(this, 700, 400))
+      
+      for(let i = 0; i < 7; i++) {
+          this.addEntity(EntityFactory.building(this, MathUtils.random(0, 800), MathUtils.random(0, 600)))
+      }
+
+      this.wingMan = new WingManEntity(Vec2.create(300,300))
+      this.addEntity(this.wingMan)
+    }
+
+    addBlood(x, y) {
+        this.addEntity(EntityFactory.blood(this, x, y))
+    }
+
+    addBullet(position, rotation, shooter = null) {
+      let b = new Bullet(position, rotation)
+      b.shooter = shooter
+        this.addEntity(b)
+        Sound.play('assets/sfx/bullet.wav')
+    }
+
+    onMouseDown(position) {
+        super.onMouseDown(position)
+
+        this.addBullet(this.player.transform.position, this.player.controller.rotation, this.player)
     }
 
     onKeyUp(key) {
-        if(key == Keys.F) {
-            this.removeEntity(this.spaceship)
-        }
+        super.onKeyUp(key)
 
-        if(key == Keys.C) {
-            this.spaceship = new SpaceshipEntity(Vec2.create( MathUtils.random(0, 400), MathUtils.random(0, 400) ))
-            this.addEntity(this.spaceship)
+        if(key == Keys.P) {
+            this.wingMan.getComponent("animator").play("wing")
         }
     }
 

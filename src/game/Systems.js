@@ -12,6 +12,6 @@ const systems = [
     }
 ]
 
-export const defaultSystem = 'menu'
+export const defaultSystem = 'game'
 
 export default systems
