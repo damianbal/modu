@@ -1,7 +1,7 @@
 # Modu.js
 > Modern Game Framework for Web
 
-![](modu.png)
+![](modu_logo.png)
 
 ## Features
 
