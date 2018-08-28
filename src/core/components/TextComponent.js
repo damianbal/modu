@@ -59,7 +59,7 @@ export default class TextComponent extends Component {
      */
     setSize(size = 20) {
         if (this.textNode) {
-            this.textNode.style.fontSize = 20
+            this.textNode.style.fontSize = size
         }
     }
 

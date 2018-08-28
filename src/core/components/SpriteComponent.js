@@ -145,7 +145,7 @@ export default class SpriteComponent extends Component {
             if (transform != null) {
                 let transformComponent = transform;
 
-                this.sprite.position.x = transformComponent.position.x;
+                this.sprite.position.x = transformComponent.position.x 
                 this.sprite.position.y = transformComponent.position.y;
                 this.sprite.rotation = transformComponent.rotation;
                 // this.sprite.width = this.sprite.texture.width

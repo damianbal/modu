@@ -93,7 +93,7 @@ export default class PhysicsComponent extends Component {
         if (this.body != null) {
             let transform = this.getEntity().getComponent("transform");
 
-            transform.position.x = this.body.position.x
+            transform.position.x = this.body.position.x 
             transform.position.y = this.body.position.y
             transform.rotation = this.body.angle
 

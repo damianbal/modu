@@ -51,8 +51,6 @@ export default class TransformComponent extends Component {
 
     update(dt) {
         super.update(dt)
-
-        // TODO: add camera position
     }
 
 }
