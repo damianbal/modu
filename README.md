@@ -3,6 +3,8 @@
 
 ![](modu-logo.png)
 
+Note: Modu is still in WIP, but it can be used now to create simple games.
+
 ## Features
 
 * Modular, easy and elegant
@@ -38,13 +40,7 @@ Demo is included with this repository, example "game".
 * PhysicsComponent - collision, gravity, etc..
 * ControllerComponent - move entity in direction, rotate so it is facing another entity, etc.. look up source to see more
 * AnimatorComponent - animates your sprite (WIP)
-
-#### Roadmap
-
-* UI components: Button, Label
-* Particle system
-* Camera system
-* Fixes 
+* TextComponent - add text to entity
 
 ### Assets
 
@@ -63,6 +59,8 @@ System manages all of the entities, game world, all of the system components, Sy
 ```javascript
 this.getManager().setSystem('system_name_here')
 ```
+
+All your systems should be in game/systems, and then added to Systems.js
 
 ### Entities
 
