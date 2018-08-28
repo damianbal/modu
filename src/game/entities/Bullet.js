@@ -41,8 +41,15 @@ export default class Bullet extends Entity {
         if(entity.tag == "Zombie") {
             let pos = entity.getComponent("transform").position
              this.getSystem().addBlood(pos.x, pos.y)
-             entity.remove()
-             Sound.play('assets/sfx/zombie_hurt.wav')
+             //entity.remove()
+             entity.health -= 25.0
+             this.remove()
+
+             if(entity.health < 0.0) { 
+                Sound.play('assets/sfx/zombie_hurt.wav')
+                entity.remove(); 
+            }
+
             
         }
         else if(this.shooter != entity) {

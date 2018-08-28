@@ -20,6 +20,13 @@ export default class TextEntity extends Entity {
         this.addComponents([this.transform, this.text])
     }
 
+    /**
+     * Easy access to TextComponent
+     */
+    text() {
+        return this.getComponent("text")
+    }
+
     setup() {
         super.setup()
     }

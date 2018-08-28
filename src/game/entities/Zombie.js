@@ -24,6 +24,8 @@ export default class Zombie extends Entity {
         this.text = new TextComponent("Zombie")
         this.text.localPosition.y = -50.0
 
+        this.health = 100
+
 
         this.tag = "Zombie"
         this.layer = 4
@@ -39,6 +41,8 @@ export default class Zombie extends Entity {
 
     update(dt) {
         super.update(dt)
+
+        this.text.textNode.text = this.health
 
         //this.physics.rotate(MathUtils.random(0,5))
         this.controller.rotate(MathUtils.random(0,30)-MathUtils.random(0,30))
