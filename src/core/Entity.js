@@ -132,7 +132,7 @@ export default class Entity {
     /**
      * Called when right mouse is clicked (not on that Entity, anywhere)
      */
-    onMouseDown(position) {
+    onMouseDown() {
 
     }
 

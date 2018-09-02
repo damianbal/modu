@@ -1,5 +1,6 @@
 import MenuSystem from "./systems/MenuSystem";
 import GameSystem from "./systems/GameSystem";
+import GameOverSystem from "./systems/GameOverSystem";
 
 const systems = [
     {
@@ -9,6 +10,10 @@ const systems = [
     {
         name: 'game',
         system: new GameSystem()
+    },
+    {
+        name: 'gameOver', 
+        system: new GameOverSystem()
     }
 ]
 

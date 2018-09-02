@@ -16,7 +16,7 @@ export default class PoliceCar extends Entity {
             x: position.x,
             y: position.y
         })
-        this.sprite = new SpriteComponent("assets/p1.png", 200, 200)
+        this.sprite = new SpriteComponent("assets/p1.png")
         this.physics = PhysicsComponentFactory.sprite(false)
         this.controller = new ControllerComponent()
         this.animator = new AnimatorComponent(0.15, policeCarAnimations)

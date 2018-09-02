@@ -38,7 +38,9 @@ export default class RenderingSystemComponent extends SystemComponent {
 
         this.app.stage.interactive =true
         this.app.stage.mousedown = (e) => {
-           this.system.onMouseDown(this.system.getMousePosition())
+            
+            console.log(this.system)
+           this.system.onMouseDown()
         }
  
     }

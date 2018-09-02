@@ -60,6 +60,19 @@ export class System {
     }
 
     /**
+     * Remove all entities and run setup
+     */
+    reset() {
+        this.entities.forEach(entity => {
+            entity.destroy()
+        })
+
+        this.entities.splice(0, this.entities.length)
+
+        this.setup()
+    }
+
+    /**
      * Called when entity is clicked
      * @param {Entity} entity 
      */
@@ -81,8 +94,8 @@ export class System {
      * Called when mouse right button is pressed, 
      * you can access mouse position with getMousePosition
      */
-    onMouseDown(position) {
-        this.entities.forEach(entity => entity.onMouseDown(position))
+    onMouseDown() {
+        this.entities.forEach(entity => entity.onMouseDown())
     }
 
     /**

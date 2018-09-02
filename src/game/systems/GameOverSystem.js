@@ -1,12 +1,19 @@
 import EntityBuilder from "../../core/utils/EntityBuilder";
 import SpriteComponent from "../../core/components/SpriteComponent";
 import TransformComponent from "../../core/components/TransformComponent";
-import { System } from "../../core/System";
-import { Keys } from "../../core/Input";
-import TextEntity from "../../core/entities/TextEntity";
-import { Vec2 } from "../../core/utils/MathUtils";
+import {
+    System
+} from "../../core/System";
+import {
+    Keys
+} from "../../core/Input";
 
-export default class MenuSystem extends System {
+import TextEntity from "../../core/entities/TextEntity";
+import {
+    Vec2
+} from "../../core/utils/MathUtils";
+
+export default class GameOverSystem extends System {
 
     constructor() {
         super();
@@ -14,8 +21,8 @@ export default class MenuSystem extends System {
 
     onKeyUp(key) {
         super.onKeyUp(key)
-        
-        if(key == Keys.SPACE) {
+
+        if (key == Keys.SPACE) {
             this.getManager().setSystem('game')
         }
     }
@@ -23,9 +30,11 @@ export default class MenuSystem extends System {
     setup() {
         super.setup()
 
-        let text = new TextEntity("Press 'space' to start!", Vec2.create(this.getWidth() / 2, this.getHeight() / 2)) 
+        this.rendering.setBackgroundColor(0x000000)
 
-        this.addEntity(text) 
+        let text = new TextEntity("Game over", Vec2.create(this.getWidth() / 2, this.getHeight() / 2))
+
+        this.addEntity(text)
     }
 
 }

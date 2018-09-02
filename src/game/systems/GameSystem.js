@@ -65,7 +65,7 @@ export default class GameSystem extends System {
 
       this.wingMan = new WingManEntity(Vec2.create(300,300))
 
-      this.addEntity(new TextEntity("This is text", Vec2.create(300.0, 300.0)))
+      //this.addEntity(new TextEntity("This is text", Vec2.create(300.0, 300.0)))
 
       this.addEntity(this.wingMan)
     }
@@ -81,14 +81,18 @@ export default class GameSystem extends System {
         Sound.play('assets/sfx/bullet.wav')
     }
 
-    onMouseDown(position) {
-        super.onMouseDown(position)
+    onMouseDown() {
+        super.onMouseDown()
 
         this.addBullet(this.player.transform.position, this.player.controller.rotation, this.player)
     }
 
     onKeyUp(key) {
         super.onKeyUp(key)
+
+        if(key == Keys.C) {
+            this.reset()
+        }
 
         if(key == Keys.P) {
             this.wingMan.getComponent("animator").play("wing")
@@ -97,6 +101,11 @@ export default class GameSystem extends System {
 
     update(dt) {
         super.update(dt);
+
+        if(this.player.health < 0) {
+            this.reset()
+            this.getManager().setSystem('menu')
+        }
     }
 
 }

@@ -32,6 +32,15 @@ export default class TextComponent extends Component {
     }
 
     /**
+     * @return PIXI.TextStyle
+     */
+    getStyle() {
+        if(this.textNode) {
+            return this.textNode.style
+        } 
+    }
+
+    /**
      * Set color in HEX
      * 
      * @param {integer} color 

@@ -7,6 +7,7 @@ import MathUtils, { Vec2 } from "../../core/utils/MathUtils";
 import { Keys } from "../../core/Input";
 import Bullet from "./Bullet";
 import PhysicsComponentFactory from "../../core/PhysicsComponentFactory";
+import TextComponent from "../../core/components/TextComponent";
 
 export default class Player extends Entity {
 
@@ -23,13 +24,20 @@ export default class Player extends Entity {
         this.controller = new ControllerComponent()
         this.player = null
 
+        this.text = new TextComponent("Health")
+        this.text.localPosition.y = 50.0
+        this.text.setSize(16)
+        this.text.setColor(0x000000)
+
         this.tag = "Player"
 
         this.layer = 5
 
         this.controller.speed = 2.0
 
-        this.addComponents([this.transform, this.sprite, this.physics, this.controller])
+        this.health = 100
+
+        this.addComponents([this.transform, this.sprite, this.physics, this.controller, this.text])
     }
 
     onKeyUp(key) {
@@ -51,12 +59,12 @@ export default class Player extends Entity {
         if (key == Keys.LEFT) this.controller.moveLeft()
         if (key == Keys.UP) this.controller.moveUp()
         if (key == Keys.DOWN) this.controller.moveDown()
-
     }
 
     onCollisionStart(entity) {
         if(entity.tag == "Zombie") {
             this.getSystem().addBlood(this.transform.position.x, this.transform.position.y)
+            this.health -= 15
         }
     }
 
@@ -66,6 +74,8 @@ export default class Player extends Entity {
 
     update(dt) {
         super.update(dt)
+
+        this.text.setText(this.health)
 
         this.controller.lookAt(this.getSystem().getMousePosition())
     }
